@@ -7,7 +7,7 @@
       :email="volunteer.email"
       :section="volunteer.section"
       :age="volunteer.age"
-      :date="volunteer.date"
+      :date="volunteer.createdAt "
     />
   </div>
 </template>
@@ -15,8 +15,6 @@
 <script>
 import Card from "@/components/Card";
 import { mapState } from "vuex";
-import { fetchVolunteersAPI } from "~/store/volunteer";
-
 export default {
   components: {
     Card
@@ -31,6 +29,14 @@ export default {
       volunteers: state => state.volunteer.volunteers
     })
   }
+
+  //  isFormValid() {
+  //    if(this.form.name) {
+  //      return true;
+  //    }
+  //    return false
+  //  }
+  // }
 };
 </script>
 
