@@ -3,10 +3,6 @@
     <Header />
     <div class="content">
       <h1>{{this.$store.state.volunteer.title}}</h1>
-      <button class="plus-button" @click="onClickPlus">
-        <img src="~/assets/img/icons/plus.svg" alt class="settings-icon" />
-      </button>
-      <Modal />
       <div class="cards-head">
         <p class="photo-heading">photo</p>
         <p class="name-heading">name</p>
@@ -22,16 +18,9 @@
 
 <script>
 import Header from "@/components/Header";
-import Modal from "@/components/shared/Modal";
 export default {
   components: {
-    Header,
-    Modal
-  },
-  methods: {
-    onClickPlus() {
-      this.$store.dispatch("volunteer/openModal");
-    }
+    Header
   }
 };
 </script>
@@ -69,31 +58,7 @@ h1 {
   font-size: 20px;
   margin: 0;
 }
-.plus-button,
-.plus-button:active {
-  outline: none;
-  cursor: pointer;
-  display: block;
-  border-radius: 50%;
-  background-repeat: no-repeat;
-  background-position: center center;
-  margin: 0 5px;
-  background-size: 30%;
-  border: none;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-  background-color: #f09c8e;
-  position: absolute;
-  right: 30px;
-  top: 0px;
-  width: 35px;
-  height: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  img {
-    height: 10px;
-  }
-}
+
 .cards-head {
   max-width: 1150px;
   margin: 0 auto;

@@ -1,0 +1,71 @@
+<template>
+  <v-app>
+    <v-row justify="center">
+      <v-dialog v-model="this.$store.state.volunteer.editModal" persistent max-width="600px">
+        <v-card>
+          <form>
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field v-model="card.name" label="Name *" required></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field v-model="card.age" type="number" label="Age *" required></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field v-model="card.email" label="Email *" required></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-text-field v-model="card.photo" label="Photo" required></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-select
+                      v-model="card.section"
+                      :items="this.$store.state.volunteer.items"
+                      label="Solo field"
+                      solo
+                    ></v-select>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="blue darken-1" text @click="updateCard">Update</v-btn>
+                      <v-btn color="blue darken-1" text @click="onCloseEditModal">Close</v-btn>
+                    </v-card-actions>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+          </form>
+        </v-card>
+      </v-dialog>
+    </v-row>
+  </v-app>
+</template>
+
+<script>
+export default {
+  props: ["cardData"],
+  data() {
+    return {
+      card: { ...this.cardData }
+    };
+  },
+  watch: {
+    cardData(data) {
+      this.card = { ...data };
+    }
+  },
+  methods: {
+    onCloseEditModal() {
+      this.$store.dispatch("volunteer/closeEditModal");
+    },
+    updateCard() {
+      this.$store.dispatch("volunteer/updateVolunteer", { ...this.card });
+      this.$store.dispatch("volunteer/closeEditModal");
+    }
+  }
+};
+</script>
+

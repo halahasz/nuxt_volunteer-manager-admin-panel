@@ -15,9 +15,10 @@
     <div class="breakline"></div>
     <p class="item" style="width: 8%">{{ date | formatDate }}</p>
     <div class="breakline"></div>
-    <p class="item" style="width: 10%">{{ String(section).replace('["', '').replace('"]', '') }}</p>
+    <p class="item" style="width: 10%">{{ section }}</p>
+    <!-- <p class="item" style="width: 10%">{{ String(section).replace('["', '').replace('"]', '') }}</p> -->
     <div class="breakline"></div>
-    <button class="pen-button" @click="onClickPlus">
+    <button class="pen-button" @click="onClickEdit">
       <img src="~/assets/img/icons/edit.svg" alt class="settings-icon" />
     </button>
   </div>
@@ -32,6 +33,9 @@ export default {
     };
   },
   props: {
+    id: {
+      required: true
+    },
     name: {
       type: String,
       required: true
@@ -44,7 +48,6 @@ export default {
       required: true
     },
     date: {
-      type: Date,
       required: true
     },
     section: {
@@ -52,8 +55,8 @@ export default {
     }
   },
   methods: {
-    onClickPlus() {
-      this.$store.dispatch("volunteer/openModal");
+    onClickEdit() {
+      this.$store.dispatch("volunteer/openEditModal");
     }
   }
 };

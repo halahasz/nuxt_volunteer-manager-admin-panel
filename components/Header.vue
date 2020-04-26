@@ -24,7 +24,7 @@
           <p class="volunteers">volunteers</p>
         </div>
         <div class="icons-container">
-          <nuxt-link to="/social" class="all-icon icon">All</nuxt-link>
+          <nuxt-link to="/" class="all-icon icon">All</nuxt-link>
           <nuxt-link to="/social" class="people-icon icon">
             <img src="~/assets/img/icons/people.png" alt class="settings-icon" />
           </nuxt-link>

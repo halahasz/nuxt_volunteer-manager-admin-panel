@@ -1,4 +1,5 @@
 import { INITIAL_DATA } from "./index";
+import Vue from "vue";
 
 export function fetchVolunteersAPI() {
   return new Promise((resolve, reject) => {
@@ -12,7 +13,9 @@ export const state = () => {
   return {
     title: "All volunteers",
     volunteers: [],
-    modal: false
+    items: ["social", "waitress", "kitchen", "logistics", "cleaning"],
+    modal: false,
+    editModal: false
   };
 };
 
@@ -29,6 +32,12 @@ export const actions = {
   closeModal({ commit }) {
     commit("setCloseModal");
   },
+  openEditModal({ commit }) {
+    commit("setOpenEditModal");
+  },
+  closeEditModal({ commit }) {
+    commit("setCloseEditModal");
+  },
   fetchVolunteers({ commit }) {
     return fetchVolunteersAPI().then(volunteers => {
       commit("setVolunteers", volunteers);
@@ -40,6 +49,14 @@ export const actions = {
       .toString(36)
       .substr(2, 7);
     commit("addVolunteer", volunteerData);
+  },
+  updateVolunteer({ commit, state }, volunteerData) {
+    const index = state.volunteers.findIndex(card => {
+      return card.id == volunteerData.id;
+    });
+    if (index !== -1) {
+      commit("replaceCard", { volunteer: volunteerData, index: index });
+    }
   }
 };
 
@@ -55,5 +72,15 @@ export const mutations = {
   },
   setCloseModal(state) {
     state.modal = false;
+  },
+  setOpenEditModal(state) {
+    state.editModal = true;
+  },
+  setCloseEditModal(state) {
+    state.editModal = false;
+  },
+  replaceCard(state, { volunteer, index }) {
+    // state.volunteers[index + 1] = volunteer;
+    Vue.set(state.volunteers, index, volunteer);
   }
 };

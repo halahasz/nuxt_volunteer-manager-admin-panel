@@ -20,18 +20,13 @@
                     <v-text-field v-model="form.photo" label="Photo" required></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6">
-                    <v-autocomplete
-                      v-model="form.section"
-                      :items="['social', 'waitress', 'kitchen', 'logistics', 'cleaning']"
-                      label="Section *"
-                      multiple
-                    ></v-autocomplete>
+                    <v-select v-model="form.section" :items="items" label="Solo field" solo></v-select>
                   </v-col>
                   <v-col cols="12" sm="6">
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn color="blue darken-1" text @click="onCloseModal">Close</v-btn>
                       <v-btn color="blue darken-1" text @click="submitForm">Save</v-btn>
+                      <v-btn color="blue darken-1" text @click="onCloseModal">Close</v-btn>
                     </v-card-actions>
                   </v-col>
                 </v-row>
@@ -55,7 +50,8 @@ export default {
         photo: "",
         section: "",
         date: ""
-      }
+      },
+      items: ["social", "waitress", "kitchen", "logistics", "cleaning"]
     };
   },
   methods: {
@@ -76,6 +72,25 @@ export default {
 </script>
 
 <style lang="scss">
+.theme--dark.v-application {
+  background: rgb(232, 240, 254);
+}
+.theme--dark.v-list {
+  background: rgb(232, 240, 254);
+}
+.theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) {
+  color: #1e88e5 !important;
+  border-bottom: 1px solid #fff;
+}
+.v-list.v-select-list.v-sheet.v-sheet--tile.theme--dark.theme--dark {
+  padding: 0;
+}
+.v-list-item__title {
+  font-size: 13px;
+}
+.theme--dark.v-text-field--solo > .v-input__control > .v-input__slot {
+  background: rgb(232, 240, 254);
+}
 .v-card__text {
   padding-bottom: 0;
 }
