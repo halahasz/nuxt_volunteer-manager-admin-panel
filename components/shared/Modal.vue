@@ -1,32 +1,66 @@
 <template>
   <v-app>
     <v-row justify="center">
-      <v-dialog v-model="this.$store.state.volunteer.modal" persistent max-width="600px">
+      <v-dialog
+        v-model="this.$store.state.volunteer.modal"
+        persistent
+        max-width="600px"
+      >
         <v-card>
           <form>
             <v-card-text>
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="form.name" label="Name *" required></v-text-field>
+                    <v-text-field
+                      v-model="form.name"
+                      label="Name *"
+                      required
+                    ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="form.age" type="number" label="Age *" required></v-text-field>
+                    <v-text-field
+                      v-model="form.age"
+                      type="number"
+                      label="Age *"
+                      required
+                    ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="form.email" label="Email *" required></v-text-field>
+                    <v-text-field
+                      v-model="form.email"
+                      label="Email *"
+                      required
+                    ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6">
-                    <v-text-field v-model="form.photo" label="Photo" required></v-text-field>
+                    <v-text-field
+                      v-model="form.photo"
+                      label="Photo"
+                    ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6">
-                    <v-select v-model="form.section" :items="items" label="Solo field" solo></v-select>
+                    <v-select
+                      v-model="form.section"
+                      :items="items"
+                      label="Section"
+                      required
+                      solo
+                    ></v-select>
                   </v-col>
                   <v-col cols="12" sm="6">
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn color="blue darken-1" text @click="submitForm">Save</v-btn>
-                      <v-btn color="blue darken-1" text @click="onCloseModal">Close</v-btn>
+                      <v-btn
+                        type="submit"
+                        color="blue darken-1"
+                        text
+                        @click.prevent="submitForm"
+                        >Save</v-btn
+                      >
+                      <v-btn color="blue darken-1" text @click="onCloseModal"
+                        >Close</v-btn
+                      >
                     </v-card-actions>
                   </v-col>
                 </v-row>
@@ -59,13 +93,21 @@ export default {
       this.$store.dispatch("volunteer/closeModal");
     },
     submitForm() {
-      this.$store.dispatch("volunteer/createVolunteer", { ...this.form });
-      this.$store.dispatch("volunteer/closeModal");
-      (this.form.name = ""),
-        (this.form.age = ""),
-        (this.form.email = ""),
-        (this.form.photo = ""),
-        (this.form.section = "");
+      console.log(this.form);
+      if (
+        this.form.name &&
+        this.form.age &&
+        this.form.email &&
+        this.form.section
+      ) {
+        this.$store.dispatch("volunteer/createVolunteer", { ...this.form });
+        this.$store.dispatch("volunteer/closeModal");
+        (this.form.name = ""),
+          (this.form.age = ""),
+          (this.form.email = ""),
+          (this.form.photo = ""),
+          (this.form.section = "");
+      }
     }
   }
 };

@@ -1,11 +1,11 @@
-import { INITIAL_DATA } from "./index";
+import INITIAL_DATA from "./initial_data.json";
 import Vue from "vue";
 
 export function fetchVolunteersAPI() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve(INITIAL_DATA.volunteers);
-    }, 1000);
+    }, 0);
   });
 }
 
