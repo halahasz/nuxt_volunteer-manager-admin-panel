@@ -7,7 +7,7 @@
         max-width="600px"
       >
         <v-card>
-          <form>
+          <form @submit.prevent="submitForm">
             <v-card-text>
               <v-container>
                 <v-row>
@@ -22,12 +22,14 @@
                     <v-text-field
                       v-model="form.age"
                       type="number"
+                      autocomplete="off"
                       label="Age *"
                       required
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field
+                      type="email"
                       v-model="form.email"
                       label="Email *"
                       required
@@ -51,11 +53,7 @@
                   <v-col cols="12" sm="6">
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn
-                        type="submit"
-                        color="blue darken-1"
-                        text
-                        @click.prevent="submitForm"
+                      <v-btn type="submit" color="blue darken-1" text
                         >Save</v-btn
                       >
                       <v-btn color="blue darken-1" text @click="onCloseModal"
@@ -132,9 +130,6 @@ export default {
 }
 .theme--dark.v-text-field--solo > .v-input__control > .v-input__slot {
   background: rgb(232, 240, 254);
-}
-.v-card__text {
-  padding-bottom: 0;
 }
 .v-btn__content {
   font-size: 11px;
