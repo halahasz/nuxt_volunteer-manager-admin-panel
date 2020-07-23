@@ -38,6 +38,10 @@ export const actions = {
   closeEditModal({ commit }) {
     commit("setCloseEditModal");
   },
+  removeVolunteer({ commit, state }, id) {
+    const updVolunteers = state.volunteers.filter(v => v.id !== id);
+    commit("setVolunteers", updVolunteers);
+  },
   fetchVolunteers({ commit }) {
     return fetchVolunteersAPI().then(volunteers => {
       commit("setVolunteers", volunteers);

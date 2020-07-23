@@ -52,8 +52,11 @@
                   <v-col cols="12" sm="6">
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn type="submit" color="blue darken-1" text
+                      <v-btn type="submit" color="green darken-1" text
                         >Update</v-btn
+                      >
+                      <v-btn @click="removeItem" color="red darken-1" text
+                        >Remove</v-btn
                       >
                       <v-btn
                         color="blue darken-1"
@@ -100,6 +103,10 @@ export default {
         this.$store.dispatch("volunteer/updateVolunteer", { ...this.card });
         this.$store.dispatch("volunteer/closeEditModal");
       }
+    },
+    removeItem() {
+      this.$store.dispatch("volunteer/removeVolunteer", this.card.id);
+      this.$store.dispatch("volunteer/closeEditModal");
     }
   }
 };
