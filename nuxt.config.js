@@ -27,7 +27,7 @@ export default {
    ** Global CSS
    */
 
-  // css: ["~/assets/scss/styles.scss"],
+  css: ["material-design-icons-iconfont/dist/material-design-icons.css"],
   // styleResources: {
   //   scss: ["~/assets/scss/_variables.scss"],
   //   scss: ["~/assets/scss/_mixins.scss"]
@@ -35,9 +35,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [
-    {src:'~/plugins/filters.js'}
-  ],
+  plugins: [{ src: "~/plugins/filters.js" }],
   /*
    ** Nuxt.js dev-modules
    */

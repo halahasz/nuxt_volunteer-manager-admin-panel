@@ -6,39 +6,65 @@
           <h1 class="logo">Volunteers Organizer</h1>
         </nuxt-link>
         <div class="icons-container">
-          <p class="login">Halina</p>
-          <a href>
+          <button class="login" @click="login">Login</button>
+          <button class="register">Register</button>
+          <LoginModal />
+          <!-- <a href>
             <img src="~/assets/img/icons/settings.svg" alt class="settings-icon" />
           </a>
           <a href>
             <img src="~/assets/img/icons/logout.svg" alt class="settings-icon" />
-          </a>
+          </a> -->
         </div>
       </div>
     </section>
     <section class="bottom-header">
       <div class="header-container">
         <div class="icons-container">
-          <img class="settings-icon user-icon" src="~/assets/img/icons/users.svg" alt />
+          <img
+            class="settings-icon user-icon"
+            src="~/assets/img/icons/users.svg"
+            alt
+          />
           <p class="number">68</p>
           <p class="volunteers">volunteers</p>
         </div>
         <div class="icons-container">
           <nuxt-link to="/" class="all-icon icon">All</nuxt-link>
           <nuxt-link to="/social" class="people-icon icon">
-            <img src="~/assets/img/icons/people.png" alt class="settings-icon" />
+            <img
+              src="~/assets/img/icons/people.png"
+              alt
+              class="settings-icon"
+            />
           </nuxt-link>
           <nuxt-link to="/waitress" class="waitress-icon icon">
-            <img src="~/assets/img/icons/waitress.png" alt class="settings-icon" />
+            <img
+              src="~/assets/img/icons/waitress.png"
+              alt
+              class="settings-icon"
+            />
           </nuxt-link>
           <nuxt-link to="/kitchen" class="kitchen-icon icon">
-            <img src="~/assets/img/icons/kitchen.png" alt class="settings-icon" />
+            <img
+              src="~/assets/img/icons/kitchen.png"
+              alt
+              class="settings-icon"
+            />
           </nuxt-link>
           <nuxt-link to="/logistics" class="logistics-icon icon">
-            <img src="~/assets/img/icons/logistics.png" alt class="settings-icon" />
+            <img
+              src="~/assets/img/icons/logistics.png"
+              alt
+              class="settings-icon"
+            />
           </nuxt-link>
           <nuxt-link to="/cleaning" class="cleaning-icon icon">
-            <img src="~/assets/img/icons/cleaning.png" alt class="settings-icon" />
+            <img
+              src="~/assets/img/icons/cleaning.png"
+              alt
+              class="settings-icon"
+            />
           </nuxt-link>
         </div>
       </div>
@@ -47,7 +73,17 @@
 </template>
 
 <script>
-export default {};
+import LoginModal from "@/components/shared/LoginModal";
+export default {
+  components: {
+    LoginModal
+  },
+  methods: {
+    login() {
+      this.$store.dispatch("volunteer/openLoginModal");
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -80,6 +116,9 @@ export default {};
 .login {
   margin-right: 40px;
   font-size: 14px;
+  font-weight: 600;
+}
+.register {
   font-weight: 600;
 }
 .bottom-header {
