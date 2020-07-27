@@ -2,7 +2,12 @@
   <div>
     <Header />
     <div class="content">
-      <h1>{{this.$store.state.volunteer.title}}</h1>
+      <h1>{{ this.$store.state.volunteer.title }}</h1>
+      <button class="plus-button" @click="onClickPlus">
+        <img src="~/assets/img/icons/plus.svg" alt class="settings-icon" />
+      </button>
+      <Modal />
+      <EditModal :cardData="activeCard" />
       <div class="cards-head">
         <p class="photo-heading">photo</p>
         <p class="name-heading">name</p>
@@ -18,9 +23,23 @@
 
 <script>
 import Header from "@/components/Header";
+import EditModal from "@/components/shared/EditModal";
+import Modal from "@/components/shared/Modal";
 export default {
   components: {
-    Header
+    Header,
+    Modal,
+    EditModal
+  },
+  data() {
+    return {
+      activeCard() {}
+    };
+  },
+  methods: {
+    onClickPlus() {
+      this.$store.dispatch("volunteer/openModal");
+    }
   }
 };
 </script>
@@ -94,5 +113,30 @@ h1 {
 .section-heading {
   margin-left: 40px;
   color: #5f5f5f;
+}
+.plus-button,
+.plus-button:active {
+  outline: none;
+  cursor: pointer;
+  display: block;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  margin: 0 5px;
+  background-size: 30%;
+  border: none;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  background-color: #f09c8e;
+  position: absolute;
+  right: 30px;
+  top: 0px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    height: 10px;
+  }
 }
 </style>
