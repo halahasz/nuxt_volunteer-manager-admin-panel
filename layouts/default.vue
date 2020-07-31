@@ -2,12 +2,18 @@
   <div>
     <Header />
     <div class="content">
-      <h1>{{ this.$store.state.volunteer.title }}</h1>
+      <h1 v-if="this.$store.state.volunteer.volunteers.length">
+        {{ this.$store.state.volunteer.title }}
+      </h1>
+      <h1 v-else>{{ this.$store.state.volunteer.noVolunteers }}</h1>
       <button class="plus-button" @click="onClickPlus">
         <img src="~/assets/img/icons/plus.svg" alt class="settings-icon" />
       </button>
       <Modal />
-      <div class="cards-head">
+      <div
+        v-if="this.$store.state.volunteer.volunteers.length"
+        class="cards-head"
+      >
         <p class="photo-heading">photo</p>
         <p class="name-heading">name</p>
         <p class="age-heading">age</p>
