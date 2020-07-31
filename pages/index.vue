@@ -1,5 +1,6 @@
 <template>
   <div class="card-container">
+    <EditCardModal :cardData="activeCard" />
     <Card
       @click.native="activateCard(volunteer)"
       v-for="volunteer in volunteers"
@@ -16,7 +17,7 @@
 
 <script>
 import Card from "@/components/Card";
-import EditModal from "@/components/shared/EditModal";
+import EditCardModal from "@/components/shared/EditCardModal";
 import Modal from "@/components/shared/Modal";
 import { mapState } from "vuex";
 import { fetchVolunteersAPI } from "~/store/volunteer";
@@ -25,9 +26,13 @@ export default {
   components: {
     Card,
     Modal,
-    EditModal
+    EditCardModal
   },
-
+  data() {
+    return {
+      activeCard() {}
+    };
+  },
   fetch({ store }) {
     if (store.getters["volunteer/hasEmptyVolunteers"]) {
       return store.dispatch("volunteer/fetchVolunteers");
@@ -42,6 +47,7 @@ export default {
     activateCard(card) {
       this.$store.dispatch("volunteer/openEditModal");
       this.activeCard = { ...card };
+      this.$emit("activate-card", this.activeCard);
     }
   }
 };

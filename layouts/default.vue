@@ -7,7 +7,6 @@
         <img src="~/assets/img/icons/plus.svg" alt class="settings-icon" />
       </button>
       <Modal />
-      <EditModal :cardData="activeCard" />
       <div class="cards-head">
         <p class="photo-heading">photo</p>
         <p class="name-heading">name</p>
@@ -23,18 +22,11 @@
 
 <script>
 import Header from "@/components/Header";
-import EditModal from "@/components/shared/EditModal";
 import Modal from "@/components/shared/Modal";
 export default {
   components: {
     Header,
-    Modal,
-    EditModal
-  },
-  data() {
-    return {
-      activeCard() {}
-    };
+    Modal
   },
   methods: {
     onClickPlus() {

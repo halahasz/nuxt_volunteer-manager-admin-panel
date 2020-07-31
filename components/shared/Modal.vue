@@ -53,10 +53,23 @@
                   <v-col cols="12" sm="6">
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn type="submit" color="blue darken-1" text
+                      <v-btn
+                        type="submit"
+                        @click="submit"
+                        color="blue"
+                        :class="{
+                          'blue  white--text': valid,
+                          disabled: !valid
+                        }"
                         >Save</v-btn
                       >
-                      <v-btn color="blue darken-1" text @click="onCloseModal"
+                      <v-btn
+                        @click="onCloseModal"
+                        color="grey"
+                        :class="{
+                          'white--text': valid,
+                          disabled: !valid
+                        }"
                         >Close</v-btn
                       >
                     </v-card-actions>
