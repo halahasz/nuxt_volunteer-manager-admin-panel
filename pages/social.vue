@@ -2,12 +2,13 @@
   <div>
     <Card
       v-for="volunteer in volunteers"
+      :id="volunteer.id"
       :key="volunteer.id"
       :name="volunteer.name"
       :email="volunteer.email"
       :section="volunteer.section"
       :age="volunteer.age"
-      :date="volunteer.createdAt "
+      :date="volunteer.createdAt"
     />
   </div>
 </template>

@@ -54,30 +54,24 @@
                       <v-spacer></v-spacer>
                       <v-btn
                         type="submit"
-                        @click="submit"
                         color="blue"
-                        :class="{
-                          'blue  white--text': valid,
-                          disabled: !valid
-                        }"
+                        class="
+                          blue  white--text
+                        "
                         >Update</v-btn
                       >
                       <v-btn
                         @click="removeItem"
                         color="red lighten-2"
-                        :class="{
-                          'white--text': valid,
-                          disabled: !valid
-                        }"
+                        class="
+                          white--text"
                         >Remove</v-btn
                       >
                       <v-btn
                         @click="onCloseEditModal"
                         color="grey"
-                        :class="{
-                          'white--text': valid,
-                          disabled: !valid
-                        }"
+                        class="
+                          white--text"
                         >Close</v-btn
                       >
                     </v-card-actions>

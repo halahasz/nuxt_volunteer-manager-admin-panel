@@ -21,6 +21,7 @@
                       type="text"
                       prepend-icon="person"
                       label="Enter your name"
+                      :rules="nameRules"
                       v-model="name"
                       required
                     ></v-text-field>
@@ -102,8 +103,9 @@ export default {
     return {
       valid: false,
       e1: false,
-      password: "",
       name: "",
+      nameRules: [v => !!v || "Name is required"],
+      password: "",
       passwordRules: [v => !!v || "Password is required"],
       email: "",
       emailRules: [

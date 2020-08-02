@@ -55,20 +55,17 @@
                       <v-spacer></v-spacer>
                       <v-btn
                         type="submit"
-                        @click="submit"
                         color="blue"
-                        :class="{
-                          'blue  white--text': valid,
-                          disabled: !valid
+                        class="{
+                          'blue  white--text'
                         }"
                         >Save</v-btn
                       >
                       <v-btn
                         @click="onCloseModal"
                         color="grey"
-                        :class="{
-                          'white--text': valid,
-                          disabled: !valid
+                        class="{
+                          'white--text'
                         }"
                         >Close</v-btn
                       >
@@ -85,6 +82,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -104,13 +102,19 @@ export default {
       this.$store.dispatch("volunteer/closeModal");
     },
     submitForm() {
-      console.log(this.form);
       if (
         this.form.name &&
         this.form.age &&
         this.form.email &&
         this.form.section
       ) {
+        axios
+          .post("https://volunteers-manager.firebaseio.com/volunteers.json", {
+            ...this.form,
+            date: new Date()
+          })
+          .then(res => console.log(res))
+          .catch(e => console.lof(e));
         this.$store.dispatch("volunteer/createVolunteer", { ...this.form });
         this.$store.dispatch("volunteer/closeModal");
         (this.form.name = ""),
