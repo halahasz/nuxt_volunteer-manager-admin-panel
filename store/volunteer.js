@@ -16,8 +16,9 @@ export const state = () => {
     volunteers: [],
     items: ["social", "waitress", "kitchen", "logistics", "cleaning"],
     modal: false,
-    editModal: false,
-    loginModal: false
+    editCardModal: false,
+    loginModal: false,
+    registerModal: false
   };
 };
 
@@ -45,6 +46,12 @@ export const actions = {
   },
   closeLoginModal({ commit }) {
     commit("setCloseLoginModal");
+  },
+  openRegisterModal({ commit }) {
+    commit("setOpenRegisterModal");
+  },
+  closeRegisterModal({ commit }) {
+    commit("setCloseRegisterModal");
   },
   removeVolunteer({ commit, state }, id) {
     const updVolunteers = state.volunteers.filter(v => v.id !== id);
@@ -86,16 +93,22 @@ export const mutations = {
     state.modal = false;
   },
   setOpenEditModal(state) {
-    state.editModal = true;
+    state.editCardModal = true;
   },
   setCloseEditModal(state) {
-    state.editModal = false;
+    state.editCardModal = false;
   },
   setOpenLoginModal(state) {
     state.loginModal = true;
   },
   setCloseLoginModal(state) {
     state.loginModal = false;
+  },
+  setOpenRegisterModal(state) {
+    state.registerModal = true;
+  },
+  setCloseRegisterModal(state) {
+    state.registerModal = false;
   },
   replaceCard(state, { volunteer, index }) {
     // state.volunteers[index + 1] = volunteer;

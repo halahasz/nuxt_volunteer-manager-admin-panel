@@ -2,7 +2,7 @@
   <v-app>
     <v-row justify="center">
       <v-dialog
-        v-model="this.$store.state.volunteer.editModal"
+        v-model="this.$store.state.volunteer.editCardModal"
         persistent
         max-width="600px"
       >

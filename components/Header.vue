@@ -7,8 +7,9 @@
         </nuxt-link>
         <div class="icons-container">
           <button class="login" @click="login">Login</button>
-          <button class="register">Register</button>
+          <button class="register" @click="register">Register</button>
           <LoginModal />
+          <RegisterModal />
           <!-- <a href>
             <img src="~/assets/img/icons/settings.svg" alt class="settings-icon" />
           </a>
@@ -74,13 +75,18 @@
 
 <script>
 import LoginModal from "@/components/shared/LoginModal";
+import RegisterModal from "@/components/shared/RegisterModal";
 export default {
   components: {
-    LoginModal
+    LoginModal,
+    RegisterModal
   },
   methods: {
     login() {
       this.$store.dispatch("volunteer/openLoginModal");
+    },
+    register() {
+      this.$store.dispatch("volunteer/openRegisterModal");
     }
   }
 };
@@ -117,9 +123,11 @@ export default {
   margin-right: 40px;
   font-size: 14px;
   font-weight: 600;
+  outline: none;
 }
 .register {
   font-weight: 600;
+  outline: none;
 }
 .bottom-header {
   height: 40px;
