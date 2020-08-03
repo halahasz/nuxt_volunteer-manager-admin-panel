@@ -1,5 +1,7 @@
 import INITIAL_DATA from "./initial_data.json";
+import CONFIG from "@/api/baseConfig";
 import Vue from "vue";
+import axios from "axios";
 
 export function fetchVolunteersAPI() {
   return new Promise((resolve, reject) => {
@@ -58,9 +60,16 @@ export const actions = {
     commit("setVolunteers", updVolunteers);
   },
   fetchVolunteers({ commit }) {
-    return fetchVolunteersAPI().then(volunteers => {
+    return axios.get(CONFIG.BASE_URL).then(result => {
+      const volunteers = [];
+      for (const key in result.data) {
+        volunteers.push({ ...result.data[key], id: key });
+      }
       commit("setVolunteers", volunteers);
     });
+    // return fetchVolunteersAPI().then(volunteers => {
+    //   commit("setVolunteers", volunteers);
+    // });
   },
   createVolunteer({ commit }, volunteerData) {
     volunteerData.date = new Date();

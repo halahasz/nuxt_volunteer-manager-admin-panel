@@ -83,6 +83,7 @@
 
 <script>
 import axios from "axios";
+import CONFIG from "@/api/baseConfig";
 export default {
   data() {
     return {
@@ -109,7 +110,7 @@ export default {
         this.form.section
       ) {
         axios
-          .post("https://volunteers-manager.firebaseio.com/volunteers.json", {
+          .post(CONFIG.BASE_URL, {
             ...this.form,
             date: new Date()
           })
