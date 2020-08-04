@@ -76,6 +76,15 @@
                           >Register</v-btn
                         >
                         <v-btn
+                          @click="login"
+                          color="grey"
+                          :class="{
+                            'blue  white--text': valid,
+                            disabled: !valid
+                          }"
+                          >Login</v-btn
+                        >
+                        <v-btn
                           @click="cancel"
                           color="grey"
                           :class="{
@@ -120,6 +129,10 @@ export default {
     submit() {},
     cancel() {
       this.$store.dispatch("volunteer/closeRegisterModal");
+    },
+    login() {
+      this.$store.dispatch("volunteer/closeRegisterModal");
+      this.$store.dispatch("volunteer/openLoginModal");
     }
   }
 };
