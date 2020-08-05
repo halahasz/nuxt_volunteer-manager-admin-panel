@@ -1,6 +1,6 @@
-import Vue from 'vue'
-import moment from 'moment'
+import Vue from "vue";
+import moment from "moment";
 
-Vue.filter('formatDate', (date) => {
-  return moment(date).format('LL')  
-})
+Vue.filter("formatDate", date => {
+  return moment(date).format("ll");
+});
