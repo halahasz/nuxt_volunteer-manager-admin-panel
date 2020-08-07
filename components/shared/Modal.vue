@@ -7,7 +7,7 @@
         max-width="600px"
       >
         <v-card>
-          <form @submit.prevent="submitForm">
+          <v-form v-model="valid" ref="form">
             <v-card-text>
               <v-container>
                 <v-row>
@@ -15,6 +15,7 @@
                     <v-text-field
                       v-model="form.name"
                       label="Name *"
+                      :rules="nameRules"
                       required
                     ></v-text-field>
                   </v-col>
@@ -22,6 +23,7 @@
                     <v-text-field
                       v-model="form.age"
                       type="number"
+                      :rules="ageRules"
                       autocomplete="off"
                       label="Age *"
                       required
@@ -31,6 +33,7 @@
                     <v-text-field
                       type="email"
                       v-model="form.email"
+                      :rules="emailRules"
                       label="Email *"
                       required
                     ></v-text-field>
@@ -45,6 +48,7 @@
                     <v-select
                       v-model="form.section"
                       :items="items"
+                      :rules="sectionRules"
                       label="Section"
                       required
                       solo
@@ -54,7 +58,7 @@
                     <v-card-actions>
                       <v-spacer></v-spacer>
                       <v-btn
-                        type="submit"
+                        @click="submit"
                         color="blue"
                         class="{
                           'blue  white--text'
@@ -74,7 +78,7 @@
                 </v-row>
               </v-container>
             </v-card-text>
-          </form>
+          </v-form>
         </v-card>
       </v-dialog>
     </v-row>
@@ -87,6 +91,11 @@ import CONFIG from "@/api/baseConfig";
 export default {
   data() {
     return {
+      valid: false,
+      nameRules: [v => !!v || "Name is required"],
+      ageRules: [v => !!v || "Age is required"],
+      emailRules: [v => !!v || "E-mail is required"],
+      sectionRules: [v => !!v || "Select a section"],
       form: {
         name: "",
         age: "",
@@ -102,13 +111,8 @@ export default {
     onCloseModal() {
       this.$store.dispatch("volunteer/closeModal");
     },
-    submitForm() {
-      if (
-        this.form.name &&
-        this.form.age &&
-        this.form.email &&
-        this.form.section
-      ) {
+    submit() {
+      if (this.$refs.form.validate()) {
         axios
           .post(CONFIG.BASE_URL, {
             ...this.form,

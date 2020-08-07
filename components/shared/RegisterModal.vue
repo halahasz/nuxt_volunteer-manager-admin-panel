@@ -53,12 +53,12 @@
                     <v-text-field
                       prepend-icon="lock"
                       label="Confirm your password"
-                      v-model="password"
+                      v-model="passwordConfirmation"
                       min="8"
                       :append-icon="e1 ? 'visibility' : 'visibility_off'"
                       :append-icon-cb="() => (e1 = !e1)"
                       :type="e1 ? 'password' : 'text'"
-                      :rules="passwordRules"
+                      :rules="passwordConfirmationRules"
                       counter
                       required
                     ></v-text-field>
@@ -116,6 +116,13 @@ export default {
       nameRules: [v => !!v || "Name is required"],
       password: "",
       passwordRules: [v => !!v || "Password is required"],
+      passwordConfirmation: "",
+      passwordConfirmationRules: [
+        v => !!v || "Password confirmation is required",
+        v =>
+          (v && v == this.password) ||
+          "Password confirmation does not match password"
+      ],
       email: "",
       emailRules: [
         v => !!v || "E-mail is required",
@@ -126,7 +133,11 @@ export default {
     };
   },
   methods: {
-    submit() {},
+    submit() {
+      if (this.$refs.form.validate()) {
+        console.log(this.email, this.password);
+      }
+    },
     cancel() {
       this.$store.dispatch("volunteer/closeRegisterModal");
     },

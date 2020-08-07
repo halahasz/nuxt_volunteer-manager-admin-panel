@@ -101,7 +101,11 @@ export default {
     };
   },
   methods: {
-    submit() {},
+    submit() {
+      if (this.$refs.form.validate()) {
+        console.log(this.email, this.password);
+      }
+    },
     cancel() {
       this.$store.dispatch("volunteer/closeLoginModal");
     },
