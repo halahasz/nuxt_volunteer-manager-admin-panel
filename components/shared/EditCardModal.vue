@@ -7,7 +7,7 @@
         max-width="600px"
       >
         <v-card>
-          <form @submit.prevent="updateCard">
+          <v-form v-model="valid" ref="form">
             <v-card-text>
               <v-container>
                 <v-row>
@@ -15,6 +15,7 @@
                     <v-text-field
                       v-model="card.name"
                       label="Name *"
+                      :rules="[required('Name')]"
                       required
                     ></v-text-field>
                   </v-col>
@@ -23,6 +24,7 @@
                       v-model="card.age"
                       type="number"
                       label="Age *"
+                      :rules="[required('Age')]"
                       required
                     ></v-text-field>
                   </v-col>
@@ -31,6 +33,7 @@
                       v-model="card.email"
                       type="email"
                       label="Email *"
+                      :rules="[required('E-mail'), emailValidation()]"
                       required
                     ></v-text-field>
                   </v-col>
@@ -45,6 +48,7 @@
                       v-model="card.section"
                       :items="this.$store.state.volunteer.items"
                       label="Solo field"
+                      :rules="[sectionRules()]"
                       required
                       solo
                     ></v-select>
@@ -53,7 +57,7 @@
                     <v-card-actions>
                       <v-spacer></v-spacer>
                       <v-btn
-                        type="submit"
+                        @click="updateCard"
                         color="blue"
                         class="
                           blue  white--text
@@ -79,7 +83,7 @@
                 </v-row>
               </v-container>
             </v-card-text>
-          </form>
+          </v-form>
         </v-card>
       </v-dialog>
     </v-row>
@@ -91,7 +95,18 @@ export default {
   props: ["cardData"],
   data() {
     return {
-      card: { ...this.cardData }
+      card: { ...this.cardData },
+      valid: false,
+      required(propertyType) {
+        return v => !!v || `${propertyType} is required`;
+      },
+      emailValidation() {
+        var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+        return v => (!!v && email_regex.test(v)) || `E-mail is not valid`;
+      },
+      sectionRules() {
+        return v => !!v || "Select a section";
+      }
     };
   },
   watch: {
@@ -104,12 +119,7 @@ export default {
       this.$store.dispatch("volunteer/closeEditModal");
     },
     updateCard() {
-      if (
-        this.card.name &&
-        this.card.age &&
-        this.card.email &&
-        this.card.section
-      ) {
+      if (this.$refs.form.validate()) {
         this.$store.dispatch("volunteer/updateVolunteer", { ...this.card });
         this.$store.dispatch("volunteer/closeEditModal");
       }

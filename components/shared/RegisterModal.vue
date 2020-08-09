@@ -21,9 +21,10 @@
                       type="text"
                       prepend-icon="person"
                       label="Enter your name"
-                      :rules="nameRules"
+                      :rules="[required('Name'), minLength('Name', 5)]"
                       v-model="name"
                       required
+                      counter
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
@@ -31,7 +32,7 @@
                       prepend-icon="person"
                       label="Enter your e-mail address"
                       v-model="email"
-                      :rules="emailRules"
+                      :rules="[required('E-mail'), emailValidation()]"
                       required
                     ></v-text-field>
                   </v-col>
@@ -44,7 +45,7 @@
                       :append-icon="e1 ? 'visibility' : 'visibility_off'"
                       :append-icon-cb="() => (e1 = !e1)"
                       :type="e1 ? 'password' : 'text'"
-                      :rules="passwordRules"
+                      :rules="[required('Password'), minLength('Password', 5)]"
                       counter
                       required
                     ></v-text-field>
@@ -58,7 +59,10 @@
                       :append-icon="e1 ? 'visibility' : 'visibility_off'"
                       :append-icon-cb="() => (e1 = !e1)"
                       :type="e1 ? 'password' : 'text'"
-                      :rules="passwordConfirmationRules"
+                      :rules="[
+                        required('Password'),
+                        passwordConfirmationRules()
+                      ]"
                       counter
                       required
                     ></v-text-field>
@@ -113,23 +117,26 @@ export default {
       valid: false,
       e1: false,
       name: "",
-      nameRules: [v => !!v || "Name is required"],
-      password: "",
-      passwordRules: [v => !!v || "Password is required"],
-      passwordConfirmation: "",
-      passwordConfirmationRules: [
-        v => !!v || "Password confirmation is required",
-        v =>
-          (v && v == this.password) ||
-          "Password confirmation does not match password"
-      ],
       email: "",
-      emailRules: [
-        v => !!v || "E-mail is required",
-        v =>
-          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-          "E-mail must be valid"
-      ]
+      password: "",
+      passwordConfirmation: "",
+      required(propertyType) {
+        return v => !!v || `${propertyType} is required`;
+      },
+      minLength(propertyType, minLength) {
+        return v =>
+          (!!v && v.length >= minLength) ||
+          `${propertyType} must be at least ${minLength} characters`;
+      },
+      emailValidation() {
+        var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+        return v => (!!v && email_regex.test(v)) || `E-mail is not valid`;
+      },
+      passwordConfirmationRules() {
+        return v =>
+          (v && v == this.password) ||
+          "Password confirmation does not match password";
+      }
     };
   },
   methods: {

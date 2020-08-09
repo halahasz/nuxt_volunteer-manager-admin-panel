@@ -15,7 +15,7 @@
                     <v-text-field
                       v-model="form.name"
                       label="Name *"
-                      :rules="nameRules"
+                      :rules="[required('Name')]"
                       required
                     ></v-text-field>
                   </v-col>
@@ -23,7 +23,7 @@
                     <v-text-field
                       v-model="form.age"
                       type="number"
-                      :rules="ageRules"
+                      :rules="[required('Age')]"
                       autocomplete="off"
                       label="Age *"
                       required
@@ -33,7 +33,7 @@
                     <v-text-field
                       type="email"
                       v-model="form.email"
-                      :rules="emailRules"
+                      :rules="[required('E-mail'), emailValidation()]"
                       label="Email *"
                       required
                     ></v-text-field>
@@ -48,7 +48,7 @@
                     <v-select
                       v-model="form.section"
                       :items="items"
-                      :rules="sectionRules"
+                      :rules="[sectionRules()]"
                       label="Section"
                       required
                       solo
@@ -92,10 +92,16 @@ export default {
   data() {
     return {
       valid: false,
-      nameRules: [v => !!v || "Name is required"],
-      ageRules: [v => !!v || "Age is required"],
-      emailRules: [v => !!v || "E-mail is required"],
-      sectionRules: [v => !!v || "Select a section"],
+      required(propertyType) {
+        return v => !!v || `${propertyType} is required`;
+      },
+      emailValidation() {
+        var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+        return v => (!!v && email_regex.test(v)) || `E-mail is not valid`;
+      },
+      sectionRules() {
+        return v => !!v || "Select a section";
+      },
       form: {
         name: "",
         age: "",
