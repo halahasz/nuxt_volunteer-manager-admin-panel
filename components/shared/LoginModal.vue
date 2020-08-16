@@ -20,7 +20,7 @@
                     <v-text-field
                       prepend-icon="person"
                       label="Enter your e-mail address"
-                      v-model="email"
+                      v-model="form.email"
                       :rules="[required('E-mail'), emailValidation()]"
                       required
                     ></v-text-field>
@@ -29,7 +29,7 @@
                     <v-text-field
                       prepend-icon="lock"
                       label="Enter your password"
-                      v-model="password"
+                      v-model="form.password"
                       min="8"
                       :append-icon="e1 ? 'visibility' : 'visibility_off'"
                       :append-icon-cb="() => (e1 = !e1)"
@@ -89,8 +89,10 @@ export default {
     return {
       valid: false,
       e1: false,
-      email: "",
-      password: "",
+      form: {
+        email: "",
+        password: ""
+      },
       required(propertyType) {
         return v => !!v || `${propertyType} is required`;
       },
@@ -108,7 +110,7 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        console.log(this.email, this.password);
+        this.$store.dispatch("auth/login", this.form);
       }
     },
     cancel() {
