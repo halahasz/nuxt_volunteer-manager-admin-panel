@@ -35,7 +35,10 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [{ src: "~/plugins/filters.js" }],
+  plugins: [
+    { src: "~/plugins/filters" },
+    { src: "~/plugins/toasted", ssr: false }
+  ],
   /*
    ** Nuxt.js dev-modules
    */

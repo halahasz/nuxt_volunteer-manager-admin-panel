@@ -91,7 +91,8 @@ export default {
       e1: false,
       form: {
         email: "",
-        password: ""
+        password: "",
+        returnSecureToken: true
       },
       required(propertyType) {
         return v => !!v || `${propertyType} is required`;
@@ -110,7 +111,16 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        this.$store.dispatch("auth/login", this.form);
+        this.$store
+          .dispatch("auth/login", this.form)
+          .then(() => {
+            this.$store.dispatch("volunteer/closeLoginModal");
+          })
+          .catch(() => {
+            this.$toasted.error("Wrong e-mail or password!", {
+              duration: 3000
+            });
+          });
       }
     },
     cancel() {

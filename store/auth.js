@@ -8,13 +8,15 @@ export const state = () => {
 };
 
 export const actions = {
-  login({ commit }, loginData) {
+  login({ commit, state }, loginData) {
     return axios
       .post(CONFIG.AUTH_URL, loginData)
       .then(user => {
+        console.log(user);
         commit("setAuthUser", user.data);
+        return state.user;
       })
-      .catch(err => console.log(err));
+      .catch(err => Promise.reject(err));
   }
 };
 
