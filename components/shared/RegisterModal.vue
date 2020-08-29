@@ -22,7 +22,7 @@
                       prepend-icon="person"
                       label="Enter your name"
                       :rules="[required('Name'), minLength('Name', 5)]"
-                      v-model="name"
+                      v-model="form.name"
                       required
                       counter
                     ></v-text-field>
@@ -31,7 +31,7 @@
                     <v-text-field
                       prepend-icon="person"
                       label="Enter your e-mail address"
-                      v-model="email"
+                      v-model="form.email"
                       :rules="[required('E-mail'), emailValidation()]"
                       required
                     ></v-text-field>
@@ -40,12 +40,16 @@
                     <v-text-field
                       prepend-icon="lock"
                       label="Enter your password"
-                      v-model="password"
+                      v-model="form.password"
                       min="8"
                       :append-icon="e1 ? 'visibility' : 'visibility_off'"
                       :append-icon-cb="() => (e1 = !e1)"
                       :type="e1 ? 'password' : 'text'"
-                      :rules="[required('Password'), minLength('Password', 5)]"
+                      :rules="[
+                        required('Password'),
+                        minLength('Password', 5),
+                        passwordValidation()
+                      ]"
                       counter
                       required
                     ></v-text-field>
@@ -54,7 +58,7 @@
                     <v-text-field
                       prepend-icon="lock"
                       label="Confirm your password"
-                      v-model="passwordConfirmation"
+                      v-model="form.passwordConfirmation"
                       min="8"
                       :append-icon="e1 ? 'visibility' : 'visibility_off'"
                       :append-icon-cb="() => (e1 = !e1)"
@@ -116,10 +120,12 @@ export default {
     return {
       valid: false,
       e1: false,
-      name: "",
-      email: "",
-      password: "",
-      passwordConfirmation: "",
+      form: {
+        email: "",
+        name: "",
+        password: "",
+        passwordConfirmation: ""
+      },
       required(propertyType) {
         return v => !!v || `${propertyType} is required`;
       },
@@ -132,9 +138,15 @@ export default {
         var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
         return v => (!!v && email_regex.test(v)) || `E-mail is not valid`;
       },
+      passwordValidation() {
+        var password_regex = /(?!^\d+$)^.+$/i;
+        return v =>
+          (!!v && password_regex.test(v)) ||
+          `Password can not contain only numbers`;
+      },
       passwordConfirmationRules() {
         return v =>
-          (v && v == this.password) ||
+          (!!v && v == this.form.password) ||
           "Password confirmation does not match password";
       }
     };
@@ -142,7 +154,17 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        console.log(this.email, this.password);
+        this.$store
+          .dispatch("auth/register", this.form)
+          .then(res => {
+            console.log(res);
+            this.$store.dispatch("volunteer/closeRegisterModal");
+          })
+          .catch(() => {
+            this.$toasted.error("The e-mail already exists!", {
+              duration: 3000
+            });
+          });
       }
     },
     cancel() {

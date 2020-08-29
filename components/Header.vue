@@ -6,16 +6,27 @@
           <h1 class="logo">Volunteers Organizer</h1>
         </nuxt-link>
         <div class="icons-container">
-          <button class="login" @click="login">Login</button>
-          <button class="register" @click="register">Register</button>
+          <button v-if="!isAuth" class="login" @click="login">Login</button>
+          <button v-if="!isAuth" class="register" @click="register">
+            Register
+          </button>
+          <p v-if="isAuth" class="username">{{ user.displayName }}</p>
+          <button v-if="isAdmin">
+            <img
+              src="~/assets/img/icons/settings.svg"
+              alt
+              class="settings-icon"
+            />
+          </button>
+          <button v-if="isAuth" @click="logout">
+            <img
+              src="~/assets/img/icons/logout.svg"
+              alt
+              class="settings-icon"
+            />
+          </button>
           <LoginModal />
           <RegisterModal />
-          <!-- <a href>
-            <img src="~/assets/img/icons/settings.svg" alt class="settings-icon" />
-          </a>
-          <a href>
-            <img src="~/assets/img/icons/logout.svg" alt class="settings-icon" />
-          </a> -->
         </div>
       </div>
     </section>
@@ -76,10 +87,22 @@
 <script>
 import LoginModal from "@/components/shared/LoginModal";
 import RegisterModal from "@/components/shared/RegisterModal";
+import { mapGetters } from "vuex";
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import Cookies from "js-cookie";
+
 export default {
   components: {
     LoginModal,
     RegisterModal
+  },
+  computed: {
+    ...mapGetters({
+      user: "auth/authUser",
+      isAuth: "auth/isAuthenticated",
+      isAdmin: "auth/isAdmin"
+    })
   },
   methods: {
     login() {
@@ -87,6 +110,13 @@ export default {
     },
     register() {
       this.$store.dispatch("volunteer/openRegisterModal");
+    },
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => this.$store.commit("auth/removeAuthUser"));
+      Cookies.remove("access_token");
     }
   }
 };
@@ -199,5 +229,8 @@ export default {
     margin-top: 4px;
     padding: 1px;
   }
+}
+.username {
+  margin-right: 30px;
 }
 </style>

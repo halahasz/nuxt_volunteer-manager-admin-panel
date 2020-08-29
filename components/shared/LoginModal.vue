@@ -84,6 +84,10 @@
 </template>
 
 <script>
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import Cookies from "js-cookie";
+
 export default {
   data() {
     return {
@@ -110,18 +114,36 @@ export default {
   },
   methods: {
     submit() {
-      if (this.$refs.form.validate()) {
-        this.$store
-          .dispatch("auth/login", this.form)
-          .then(() => {
-            this.$store.dispatch("volunteer/closeLoginModal");
-          })
-          .catch(() => {
-            this.$toasted.error("Wrong e-mail or password!", {
-              duration: 3000
-            });
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.form.email, this.form.password)
+        .then(user => {
+          this.$store.commit("auth/setAuthUser", this.form);
+          firebase
+            .auth()
+            .currentUser.getIdToken(true)
+            .then(token => Cookies.set("access_token", token));
+          this.$store.dispatch("volunteer/closeLoginModal");
+        })
+        .catch(err => {
+          this.$toasted.error(err, {
+            duration: 4000
           });
-      }
+        });
+
+      // if (this.$refs.form.validate()) {
+      //   this.$store
+      //     .dispatch("auth/login", this.form)
+      //     .then(res => {
+      //       console.log(res);
+      //       this.$store.dispatch("volunteer/closeLoginModal");
+      //     })
+      //     .catch(() => {
+      //       this.$toasted.error("Wrong e-mail or password!", {
+      //         duration: 3000
+      //       });
+      //     });
+      // }
     },
     cancel() {
       this.$store.dispatch("volunteer/closeLoginModal");

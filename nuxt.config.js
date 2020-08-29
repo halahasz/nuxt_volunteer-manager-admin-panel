@@ -37,6 +37,7 @@ export default {
    */
   plugins: [
     { src: "~/plugins/filters" },
+    { src: "~/plugins/firebase" },
     { src: "~/plugins/toasted", ssr: false }
   ],
   /*
