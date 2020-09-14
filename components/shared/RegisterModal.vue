@@ -115,6 +115,10 @@
 </template>
 
 <script>
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import Cookies from "js-cookie";
+
 export default {
   data() {
     return {
@@ -153,19 +157,33 @@ export default {
   },
   methods: {
     submit() {
-      if (this.$refs.form.validate()) {
-        this.$store
-          .dispatch("auth/register", this.form)
-          .then(res => {
-            console.log(res);
-            this.$store.dispatch("volunteer/closeRegisterModal");
-          })
-          .catch(() => {
-            this.$toasted.error("The e-mail already exists!", {
-              duration: 3000
-            });
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.form.email, this.form.password)
+        .then(() => {
+          let user = firebase.auth().currentUser;
+          user
+            .updateProfile({
+              displayName: this.form.name
+            })
+            .then(() => {
+              this.$store.dispatch("auth/register", {
+                name: user.displayName,
+                email: user.email,
+                password: user.password
+              });
+              user
+                .getIdToken(true)
+                .then(token => Cookies.set("access_token", token));
+              this.$store.dispatch("volunteer/closeRegisterModal");
+            })
+            .catch(error => console.log(error));
+        })
+        .catch(err => {
+          this.$toasted.error(err, {
+            duration: 3000
           });
-      }
+        });
     },
     cancel() {
       this.$store.dispatch("volunteer/closeRegisterModal");

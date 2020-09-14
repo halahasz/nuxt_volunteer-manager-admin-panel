@@ -130,20 +130,6 @@ export default {
             duration: 4000
           });
         });
-
-      // if (this.$refs.form.validate()) {
-      //   this.$store
-      //     .dispatch("auth/login", this.form)
-      //     .then(res => {
-      //       console.log(res);
-      //       this.$store.dispatch("volunteer/closeLoginModal");
-      //     })
-      //     .catch(() => {
-      //       this.$toasted.error("Wrong e-mail or password!", {
-      //         duration: 3000
-      //       });
-      //     });
-      // }
     },
     cancel() {
       this.$store.dispatch("volunteer/closeLoginModal");

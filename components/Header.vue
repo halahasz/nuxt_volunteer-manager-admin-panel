@@ -10,8 +10,8 @@
           <button v-if="!isAuth" class="register" @click="register">
             Register
           </button>
-          <p v-if="isAuth" class="username">{{ user.displayName }}</p>
-          <button v-if="isAdmin">
+          <p v-if="isAuth" class="username">{{ user.name }}</p>
+          <button v-if="isAuth">
             <img
               src="~/assets/img/icons/settings.svg"
               alt
@@ -100,8 +100,7 @@ export default {
   computed: {
     ...mapGetters({
       user: "auth/authUser",
-      isAuth: "auth/isAuthenticated",
-      isAdmin: "auth/isAdmin"
+      isAuth: "auth/isAuthenticated"
     })
   },
   methods: {

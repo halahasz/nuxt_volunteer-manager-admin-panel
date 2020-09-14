@@ -7,16 +7,15 @@
       }"
     ></div>
     <div class="breakline"></div>
-    <p class="item" style="width: 15%">{{ name }}</p>
+    <p class="item">{{ name }}</p>
     <div class="breakline"></div>
-    <p class="item" style="width: 2%">{{ age }}</p>
+    <p class="item">{{ age }}</p>
     <div class="breakline"></div>
-    <p class="item" style="width: 25%">{{ email }}</p>
+    <p class="item">{{ email }}</p>
     <div class="breakline"></div>
-    <p class="item" style="width: 8%">{{ date | formatDate }}</p>
+    <p class="item">{{ date | formatDate }}</p>
     <div class="breakline"></div>
-    <p class="item" style="width: 10%">{{ section }}</p>
-    <!-- <p class="item" style="width: 10%">{{ String(section).replace('["', '').replace('"]', '') }}</p> -->
+    <p class="item">{{ section }}</p>
     <div class="breakline"></div>
     <button class="pen-button" @click="onClickEdit">
       <img src="~/assets/img/icons/edit.svg" alt class="settings-icon" />
@@ -62,7 +61,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .card-wrapper {
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
   background-color: #fff;
@@ -72,7 +71,7 @@ export default {
 }
 .avatar {
   height: 45px;
-  margin: 13px 20px;
+  margin: 13px 0px;
   width: 45px;
   padding: 13px;
   border-radius: 10px;

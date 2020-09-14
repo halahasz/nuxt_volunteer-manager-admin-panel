@@ -10,18 +10,125 @@
         <img src="~/assets/img/icons/plus.svg" alt class="settings-icon" />
       </button>
       <Modal />
-      <div
+      <!-- <div
         v-if="this.$store.state.volunteer.volunteers.length"
         class="cards-head"
       >
-        <p class="photo-heading">photo</p>
-        <p class="name-heading">name</p>
+        <p class="item-heading" style="width: 15%">photo</p>
+        <p class="item-heading" style="width: %">name</p>
         <p class="age-heading">age</p>
         <p class="mail-heading">e-mail</p>
         <p class="date-heading">joining date</p>
         <p class="section-heading">section</p>
-      </div>
-      <nuxt />
+      </div> -->
+
+      <v-container>
+        <template>
+          <v-data-table
+            :headers="headers"
+            :items="this.$store.state.volunteer.volunteers"
+            class="elevation-1 volunteers-table"
+            show-select
+            v-model="selected"
+            :search="search"
+            color="accent"
+          >
+            <template v-slot:top>
+              <v-toolbar flat color="white">
+                <v-btn
+                  :disabled="!selected.length"
+                  color="warning"
+                  dark
+                  class="mb-2"
+                  @click="removeItems"
+                  >USUŃ ZAZNACZONE</v-btn
+                >
+                <v-spacer></v-spacer>
+                <v-text-field
+                  color="accent"
+                  v-model="search"
+                  append-icon="mdi-magnify"
+                  label="Search"
+                  single-line
+                  hide-details
+                  class="search-field"
+                ></v-text-field>
+              </v-toolbar>
+            </template>
+            <template v-slot:body="{ items }">
+              <tbody>
+                <tr
+                  v-for="item in items"
+                  :key="item.id"
+                  :class="{ 'v-data-table__selected': selected.includes(item) }"
+                >
+                  <td>
+                    <v-checkbox
+                      v-model="selected"
+                      :value="item"
+                      color="#5eb5ad"
+                    />
+                  </td>
+                  <td class="text-start">
+                    <div class="td-wrapper">
+                      <div
+                        class="avatar"
+                        :style="{
+                          backgroundImage: `url(${require(`@/assets/img/avatars/1.jpg`)})`
+                        }"
+                      ></div>
+                      <div class="breakline"></div>
+                    </div>
+                  </td>
+                  <td class="text-start">
+                    <div class="td-wrapper">
+                      <p>{{ item.name }}</p>
+                      <div class="breakline"></div>
+                    </div>
+                  </td>
+                  <td class="text-start">
+                    <div class="td-wrapper">
+                      <p>{{ item.age }}</p>
+                      <div class="breakline"></div>
+                    </div>
+                  </td>
+                  <td class="text-start">
+                    <div class="td-wrapper">
+                      <p>{{ item.email }}</p>
+                      <div class="breakline"></div>
+                    </div>
+                  </td>
+                  <td class="text-start">
+                    <div class="td-wrapper">
+                      <p>{{ item.date | formatDate }}</p>
+                      <div class="breakline"></div>
+                    </div>
+                  </td>
+                  <td class="text-start">
+                    <div class="td-wrapper">
+                      <p>{{ item.section }}</p>
+                      <div class="breakline"></div>
+                    </div>
+                  </td>
+                  <td class="text-start">
+                    <button class="pen-button" @click="onClickEdit">
+                      <img
+                        src="~/assets/img/icons/edit.svg"
+                        alt
+                        class="settings-icon"
+                      />
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </template>
+            <template v-slot:no-data>
+              <p>No products</p>
+            </template>
+          </v-data-table>
+        </template>
+        <!-- <vue-markdown>{{ source }}</vue-markdown> -->
+      </v-container>
     </div>
   </div>
 </template>
@@ -34,9 +141,40 @@ export default {
     Header,
     Modal
   },
+  data: () => ({
+    search: "",
+    selected: [],
+    headers: [
+      { text: "Thumbnail", value: "" },
+      { text: "Name", value: "name" },
+      { text: "Age", value: "age" },
+      { text: "E-mail", value: "email" },
+      { text: "Joining date", value: "date" },
+      { text: "Section", value: "section" },
+      { text: "", value: "actions", sortable: false }
+    ]
+  }),
   methods: {
     onClickPlus() {
       this.$store.dispatch("volunteer/openModal");
+    },
+    onClickEdit() {
+      this.$store.dispatch("volunteer/openEditModal");
+    },
+    removeItems() {
+      confirm("Are you sure you want to delete these items?") &&
+        this.selected.forEach(el => {
+          this.$axios
+            .delete("/api/products/" + el.id)
+            .then(res => {
+              const index = this.products.indexOf(el);
+              this.products.splice(index, 1);
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
+        });
+      this.selected = [];
     }
   }
 };
@@ -54,28 +192,48 @@ export default {
 }
 
 html {
-  font-size: 62.5%;
+  /* font-size: 62.5%; */
 }
 
 body {
   margin: 0;
   padding: 0;
-  font-size: 1.4rem;
+  /* font-size: 1.6rem; */
   font-family: "Open Sans", sans-serif;
   background-color: #f7f7f7;
 }
+
 .content {
   max-width: 1150px;
   margin: 0 auto;
   margin-top: 40px;
   position: relative;
 }
+.volunteers-table {
+  .v-toolbar__content,
+  .v-data-table-header tr,
+  .v-data-footer {
+    background-color: #f7f7f7;
+  }
+  .td-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  th {
+    span {
+      /* font-size: ; */
+    }
+  }
+}
 h1 {
   text-align: center;
   font-size: 20px;
   margin: 0;
 }
-
+.text-start {
+  text-align: left;
+}
 .cards-head {
   max-width: 1150px;
   margin: 0 auto;
@@ -84,8 +242,7 @@ h1 {
   display: flex;
   align-items: center;
 }
-.photo-heading {
-  margin: 0 20px;
+.item-heading {
   color: #5f5f5f;
 }
 .name-heading {

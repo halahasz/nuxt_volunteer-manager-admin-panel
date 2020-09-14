@@ -14,7 +14,7 @@ export function fetchVolunteersAPI() {
 export const state = () => {
   return {
     title: "All volunteers",
-    noVolunteers: "There is no volunteers",
+    noVolunteers: "There are no volunteers",
     volunteers: [],
     items: ["social", "waitress", "kitchen", "logistics", "cleaning"],
     modal: false,

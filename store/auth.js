@@ -13,35 +13,12 @@ export const getters = {
   },
   isAuthenticated(state) {
     return !!state.user;
-  },
-  isAdmin(state) {
-    return state.user && state.user.role && state.user.role === "admin ";
   }
 };
 
 export const actions = {
-  register({ commit, state }, registerData) {
-    return axios
-      .post(CONFIG.SIGNUP_URL, {
-        email: registerData.email,
-        password: registerData.password,
-        returnSecureToken: true
-      })
-      .then(user => {
-        console.log(user);
-        return axios
-          .post(CONFIG.UPDATE_URL, {
-            idToken: user.data.idToken,
-            displayName: registerData.name,
-            returnSecureToken: true
-          })
-          .then(user => {
-            console.log(user.data);
-            commit("setAuthUser", user.data);
-          })
-          .catch(err => Promise.reject(err));
-      })
-      .catch(err => Promise.reject(err));
+  register({ commit }, user) {
+    commit("setAuthUser", user);
   }
 };
 
