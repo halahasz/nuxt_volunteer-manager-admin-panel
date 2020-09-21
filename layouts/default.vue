@@ -1,16 +1,18 @@
 <template>
-  <div>
-    <Header />
-    <div class="content">
-      <h1 v-if="this.$store.state.volunteer.volunteers.length">
-        {{ this.$store.state.volunteer.title }}
-      </h1>
-      <h1 v-else>{{ this.$store.state.volunteer.noVolunteers }}</h1>
-      <button class="plus-button" @click="onClickPlus">
-        <img src="~/assets/img/icons/plus.svg" alt class="settings-icon" />
-      </button>
-      <Modal />
-      <!-- <div
+  <v-app>
+    <div>
+      <Header />
+      <div class="content">
+        <h1 v-if="this.$store.state.volunteer.volunteers.length">
+          {{ this.$store.state.volunteer.title }}
+        </h1>
+        <h1 v-else>{{ this.$store.state.volunteer.noVolunteers }}</h1>
+        <button class="plus-button" @click="onClickPlus">
+          <img src="~/assets/img/icons/plus.svg" alt class="settings-icon" />
+        </button>
+        <Modal />
+        <EditCardModal :cardData="activeCard" />
+        <!-- <div
         v-if="this.$store.state.volunteer.volunteers.length"
         class="cards-head"
       >
@@ -22,124 +24,129 @@
         <p class="section-heading">section</p>
       </div> -->
 
-      <v-container>
-        <template>
-          <v-data-table
-            :headers="headers"
-            :items="this.$store.state.volunteer.volunteers"
-            class="elevation-1 volunteers-table"
-            show-select
-            v-model="selected"
-            :search="search"
-            color="accent"
-          >
-            <template v-slot:top>
-              <v-toolbar flat color="white">
-                <v-btn
-                  :disabled="!selected.length"
-                  color="warning"
-                  dark
-                  class="mb-2"
-                  @click="removeItems"
-                  >USUŃ ZAZNACZONE</v-btn
-                >
-                <v-spacer></v-spacer>
-                <v-text-field
-                  color="accent"
-                  v-model="search"
-                  append-icon="mdi-magnify"
-                  label="Search"
-                  single-line
-                  hide-details
-                  class="search-field"
-                ></v-text-field>
-              </v-toolbar>
-            </template>
-            <template v-slot:body="{ items }">
-              <tbody>
-                <tr
-                  v-for="item in items"
-                  :key="item.id"
-                  :class="{ 'v-data-table__selected': selected.includes(item) }"
-                >
-                  <td>
-                    <v-checkbox
-                      v-model="selected"
-                      :value="item"
-                      color="#5eb5ad"
-                    />
-                  </td>
-                  <td class="text-start">
-                    <div class="td-wrapper">
-                      <div
-                        class="avatar"
-                        :style="{
-                          backgroundImage: `url(${require(`@/assets/img/avatars/1.jpg`)})`
-                        }"
-                      ></div>
-                      <div class="breakline"></div>
-                    </div>
-                  </td>
-                  <td class="text-start">
-                    <div class="td-wrapper">
-                      <p>{{ item.name }}</p>
-                      <div class="breakline"></div>
-                    </div>
-                  </td>
-                  <td class="text-start">
-                    <div class="td-wrapper">
-                      <p>{{ item.age }}</p>
-                      <div class="breakline"></div>
-                    </div>
-                  </td>
-                  <td class="text-start">
-                    <div class="td-wrapper">
-                      <p>{{ item.email }}</p>
-                      <div class="breakline"></div>
-                    </div>
-                  </td>
-                  <td class="text-start">
-                    <div class="td-wrapper">
-                      <p>{{ item.date | formatDate }}</p>
-                      <div class="breakline"></div>
-                    </div>
-                  </td>
-                  <td class="text-start">
-                    <div class="td-wrapper">
-                      <p>{{ item.section }}</p>
-                      <div class="breakline"></div>
-                    </div>
-                  </td>
-                  <td class="text-start">
-                    <button class="pen-button" @click="onClickEdit">
-                      <img
-                        src="~/assets/img/icons/edit.svg"
-                        alt
-                        class="settings-icon"
+        <v-container>
+          <template>
+            <v-data-table
+              :headers="headers"
+              :items="this.$store.state.volunteer.volunteers"
+              class="volunteers-table"
+              show-select
+              v-model="selected"
+              :search="search"
+              color="accent"
+            >
+              <template v-slot:top>
+                <v-toolbar flat color="white">
+                  <v-btn
+                    :disabled="!selected.length"
+                    color="warning"
+                    dark
+                    class="mb-2"
+                    @click="removeItems"
+                    >USUŃ ZAZNACZONE</v-btn
+                  >
+                  <v-spacer></v-spacer>
+                  <v-text-field
+                    color="primary"
+                    v-model="search"
+                    append-icon="mdi-magnify"
+                    label="Search"
+                    single-line
+                    hide-details
+                    class="search-field"
+                  ></v-text-field>
+                </v-toolbar>
+              </template>
+              <template v-slot:body="{ items }">
+                <tbody>
+                  <tr
+                    v-for="item in items"
+                    :key="item.id"
+                    :class="{
+                      'v-data-table__selected': selected.includes(item)
+                    }"
+                  >
+                    <td>
+                      <v-checkbox
+                        v-model="selected"
+                        :value="item"
+                        color="#5eb5ad"
                       />
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </template>
-            <template v-slot:no-data>
-              <p>No products</p>
-            </template>
-          </v-data-table>
-        </template>
-        <!-- <vue-markdown>{{ source }}</vue-markdown> -->
-      </v-container>
+                    </td>
+                    <td class="text-start">
+                      <div class="td-wrapper">
+                        <div
+                          class="avatar"
+                          :style="{
+                            backgroundImage: `url(${require(`@/assets/img/avatars/1.jpg`)})`
+                          }"
+                        ></div>
+                        <div class="breakline"></div>
+                      </div>
+                    </td>
+                    <td class="text-start">
+                      <div class="td-wrapper">
+                        <p>{{ item.name }}</p>
+                        <div class="breakline"></div>
+                      </div>
+                    </td>
+                    <td class="text-start">
+                      <div class="td-wrapper">
+                        <p>{{ item.age }}</p>
+                        <div class="breakline"></div>
+                      </div>
+                    </td>
+                    <td class="text-start">
+                      <div class="td-wrapper">
+                        <p>{{ item.email }}</p>
+                        <div class="breakline"></div>
+                      </div>
+                    </td>
+                    <td class="text-start">
+                      <div class="td-wrapper">
+                        <p>{{ item.date | formatDate }}</p>
+                        <div class="breakline"></div>
+                      </div>
+                    </td>
+                    <td class="text-start">
+                      <div class="td-wrapper">
+                        <p>{{ item.section }}</p>
+                        <div class="breakline"></div>
+                      </div>
+                    </td>
+                    <td class="text-start">
+                      <button class="pen-button" @click="onClickEdit">
+                        <img
+                          src="~/assets/img/icons/edit.svg"
+                          alt
+                          class="settings-icon"
+                        />
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </template>
+              <template v-slot:no-data>
+                <p>No products</p>
+              </template>
+            </v-data-table>
+          </template>
+          <!-- <vue-markdown>{{ source }}</vue-markdown> -->
+        </v-container>
+      </div>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script>
 import Header from "@/components/Header";
 import Modal from "@/components/shared/Modal";
+import EditCardModal from "@/components/shared/EditCardModal";
 export default {
   components: {
     Header,
-    Modal
+    Modal,
+    EditCardModal
   },
   data: () => ({
     search: "",
@@ -152,9 +159,15 @@ export default {
       { text: "Joining date", value: "date" },
       { text: "Section", value: "section" },
       { text: "", value: "actions", sortable: false }
-    ]
+    ],
+    activeCard: {}
   }),
   methods: {
+    activateCard(card) {
+      this.$store.dispatch("volunteer/openEditModal");
+      this.activeCard = { ...card };
+      this.$emit("activate-card", this.activeCard);
+    },
     onClickPlus() {
       this.$store.dispatch("volunteer/openModal");
     },
@@ -190,12 +203,8 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-html {
-  /* font-size: 62.5%; */
-}
-
-body {
+body,
+.v-application--wrap {
   margin: 0;
   padding: 0;
   /* font-size: 1.6rem; */
@@ -209,6 +218,27 @@ body {
   margin-top: 40px;
   position: relative;
 }
+.v-application p {
+  margin-bottom: 0;
+}
+.v-data-table.volunteers-table.theme--light {
+  margin-top: 10px;
+}
+.theme--light.v-data-table thead tr:last-child th {
+  border-bottom: none;
+}
+.theme--light.v-data-table .v-data-footer {
+  border-top: none;
+}
+.theme--light.v-data-table tbody tr.v-data-table__selected,
+.theme--light.v-data-table
+  tbody
+  tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
+  background-color: #eaf6eb;
+}
+form .v-card__text {
+  background-color: #f6f6f6;
+}
 .volunteers-table {
   .v-toolbar__content,
   .v-data-table-header tr,
@@ -219,11 +249,6 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  th {
-    span {
-      /* font-size: ; */
-    }
   }
 }
 h1 {

@@ -49,7 +49,7 @@
                       v-model="form.section"
                       :items="items"
                       :rules="[sectionRules()]"
-                      label="Section"
+                      label="Section*"
                       required
                       solo
                     ></v-select>
@@ -60,17 +60,13 @@
                       <v-btn
                         @click="submit"
                         color="blue"
-                        class="{
-                          'blue  white--text'
-                        }"
+                        class="blue  white--text"
                         >Save</v-btn
                       >
                       <v-btn
                         @click="onCloseModal"
                         color="grey"
-                        class="{
-                          'white--text'
-                        }"
+                        class="white--text"
                         >Close</v-btn
                       >
                     </v-card-actions>
