@@ -11,14 +11,14 @@
             Register
           </button>
           <p v-if="isAuth" class="username">{{ user.name }}</p>
-          <button v-if="isAuth">
+          <button v-if="isAuth" class="header-button">
             <img
               src="~/assets/img/icons/settings.svg"
               alt
               class="settings-icon"
             />
           </button>
-          <button v-if="isAuth" @click="logout">
+          <button v-if="isAuth" @click="logout" class="header-button">
             <img
               src="~/assets/img/icons/logout.svg"
               alt
@@ -168,6 +168,9 @@ export default {
   width: 20px;
   height: 20px;
   margin: 0 5px;
+}
+.header-button {
+  outline: none;
 }
 .user-icon {
   margin: 0;

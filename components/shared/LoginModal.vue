@@ -45,32 +45,19 @@
                         <v-btn
                           @click="submit"
                           color="blue"
-                          :class="{
-                            'blue  white--text': valid,
-                            disabled: !valid
-                          }"
+                          class="blue  white--text"
                           >Login</v-btn
                         >
                         <v-btn
                           @click="register"
                           color="grey"
-                          :class="{
-                            'blue  white--text': valid,
-                            disabled: !valid
-                          }"
+                          class="blue  white--text"
                           >Register</v-btn
                         >
-                        <v-btn
-                          @click="cancel"
-                          color="grey"
-                          :class="{
-                            'white--text': valid,
-                            disabled: !valid
-                          }"
+                        <v-btn @click="cancel" color="grey" class="white--text"
                           >Cancel</v-btn
                         >
                       </div>
-                      <a href="">Forgot Password</a>
                     </v-layout>
                   </v-col>
                 </v-row>
@@ -114,25 +101,35 @@ export default {
   },
   methods: {
     submit() {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.form.email, this.form.password)
-        .then(user => {
-          this.$store.commit("auth/setAuthUser", this.form);
-          firebase
-            .auth()
-            .currentUser.getIdToken(true)
-            .then(token => Cookies.set("access_token", token));
-          this.$store.dispatch("volunteer/closeLoginModal");
-        })
-        .catch(err => {
-          this.$toasted.error(err, {
-            duration: 4000
+      if (this.$refs.form.validate()) {
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(this.form.email, this.form.password)
+          .then(user => {
+            this.$store.commit("auth/setAuthUser", this.form);
+            firebase
+              .auth()
+              .currentUser.getIdToken(true)
+              .then(token => Cookies.set("access_token", token));
+            let userName = firebase.auth().currentUser.displayName;
+            this.$store.dispatch("auth/setUser", {
+              name: userName
+            });
+            this.$store.dispatch("volunteer/closeLoginModal");
+          })
+          .catch(err => {
+            this.$toasted.error(err, {
+              duration: 4000
+            });
           });
-        });
+        setTimeout(() => {
+          this.$refs.form.reset();
+        }, 3000);
+      }
     },
     cancel() {
       this.$store.dispatch("volunteer/closeLoginModal");
+      this.$refs.form.reset();
     },
     register() {
       this.$store.dispatch("volunteer/closeLoginModal");

@@ -17,7 +17,7 @@ export const getters = {
 };
 
 export const actions = {
-  register({ commit }, user) {
+  setUser({ commit }, user) {
     commit("setAuthUser", user);
   }
 };
