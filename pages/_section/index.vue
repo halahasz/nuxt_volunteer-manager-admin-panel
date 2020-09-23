@@ -137,11 +137,6 @@ export default {
     ],
     activeCard: {}
   }),
-  fetch({ store }) {
-    if (store.getters["volunteer/hasEmptyVolunteers"]) {
-      return store.dispatch("volunteer/fetchVolunteers");
-    }
-  },
   methods: {
     activateCard(card) {
       this.$store.dispatch("volunteer/openEditModal");
