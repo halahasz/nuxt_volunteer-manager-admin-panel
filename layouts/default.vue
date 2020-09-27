@@ -97,6 +97,9 @@ body,
   margin: 0 auto;
   margin-top: 40px;
   position: relative;
+  h1 {
+    margin: 15px 0;
+  }
 }
 .v-application p {
   margin-bottom: 0;
