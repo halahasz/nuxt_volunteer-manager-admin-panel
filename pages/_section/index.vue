@@ -156,15 +156,7 @@ export default {
     removeItems() {
       confirm("Are you sure you want to delete these items?") &&
         this.selected.forEach(el => {
-          this.$axios
-            .delete("/api/products/" + el.id)
-            .then(res => {
-              const index = this.products.indexOf(el);
-              this.products.splice(index, 1);
-            })
-            .catch(function(error) {
-              console.log(error);
-            });
+          this.$store.dispatch("volunteer/removeVolunteer", el.id);
         });
       this.selected = [];
     }

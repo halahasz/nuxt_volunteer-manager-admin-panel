@@ -58,6 +58,12 @@ export const actions = {
   removeVolunteer({ commit, state }, id) {
     const updVolunteers = state.volunteers.filter(v => v.id !== id);
     commit("setVolunteers", updVolunteers);
+    return axios
+      .delete(CONFIG.DELETE_URL + id + ".json")
+      .then(result => {
+        console.log(result);
+      })
+      .catch(err => console.log(err));
   },
   fetchVolunteers({ commit }) {
     return axios.get(CONFIG.BASE_URL).then(result => {
