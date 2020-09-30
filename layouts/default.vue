@@ -105,7 +105,7 @@ body,
   margin-bottom: 0;
 }
 .v-data-table.volunteers-table.theme--light {
-  margin-top: 10px;
+  /* margin-top: 10px; */
 }
 .theme--light.v-data-table thead tr:last-child th {
   border-bottom: none;

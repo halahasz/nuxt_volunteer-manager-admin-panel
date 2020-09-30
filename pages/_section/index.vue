@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <EditCardModal :cardData="activeCard" />
-    <v-container>
+    <v-container class="volunteers-container">
       <template>
         <v-data-table
           :headers="headers"
@@ -23,7 +23,7 @@
                 >USUŃ ZAZNACZONE</v-btn
               >
               <v-spacer></v-spacer>
-              <v-text-field
+              <!-- <v-text-field
                 color="primary"
                 v-model="search"
                 append-icon="mdi-magnify"
@@ -31,7 +31,7 @@
                 single-line
                 hide-details
                 class="search-field"
-              ></v-text-field>
+              ></v-text-field> -->
             </v-toolbar>
           </template>
           <template v-slot:body="{ items }">
@@ -164,6 +164,9 @@ export default {
 };
 </script>
 <style lang="scss">
+.volunteers-container {
+  padding-top: 0;
+}
 .card-wrapper {
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
   background-color: #fff;
