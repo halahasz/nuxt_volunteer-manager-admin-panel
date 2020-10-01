@@ -129,6 +129,7 @@ export default {
         setTimeout(() => {
           this.$refs.form.reset();
         }, 3000);
+        this.$refs.form.resetValidation();
       }
     },
     cancel() {

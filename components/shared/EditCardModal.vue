@@ -122,6 +122,7 @@ export default {
       if (this.$refs.form.validate()) {
         this.$store.dispatch("volunteer/updateVolunteer", { ...this.card });
         this.$store.dispatch("volunteer/closeEditModal");
+        this.$refs.form.resetValidation();
       }
     },
     removeItem() {

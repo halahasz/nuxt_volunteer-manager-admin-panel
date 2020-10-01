@@ -129,6 +129,7 @@ export default {
           (this.form.email = ""),
           (this.form.photo = ""),
           (this.form.section = "");
+        this.$refs.form.resetValidation();
       }
     }
   }

@@ -23,7 +23,7 @@
                 >USUŃ ZAZNACZONE</v-btn
               >
               <v-spacer></v-spacer>
-              <!-- <v-text-field
+              <v-text-field
                 color="primary"
                 v-model="search"
                 append-icon="mdi-magnify"
@@ -31,7 +31,7 @@
                 single-line
                 hide-details
                 class="search-field"
-              ></v-text-field> -->
+              ></v-text-field>
             </v-toolbar>
           </template>
           <template v-slot:body="{ items }">
