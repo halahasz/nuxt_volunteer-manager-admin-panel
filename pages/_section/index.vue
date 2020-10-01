@@ -38,7 +38,7 @@
             <tbody>
               <tr
                 v-for="item in items"
-                :key="item.id"
+                :key="item"
                 :class="{
                   'v-data-table__selected': selected.includes(item)
                 }"
@@ -46,7 +46,7 @@
                 <td>
                   <v-checkbox
                     v-model="selected"
-                    :value="item"
+                    :value="item.id"
                     color="#5eb5ad"
                   />
                 </td>
@@ -144,14 +144,13 @@ export default {
     activateCard(card) {
       this.$store.dispatch("volunteer/openEditModal");
       this.activeCard = { ...card };
-      this.$emit("activate-card", this.activeCard);
     },
     onClickPlus() {
       this.$store.dispatch("volunteer/openModal");
     },
     onClickEdit(item) {
-      this.$store.dispatch("volunteer/openEditModal");
       this.activeCard = { ...item };
+      this.$store.dispatch("volunteer/openEditModal");
     },
     removeItems() {
       confirm("Are you sure you want to delete these items?") &&
