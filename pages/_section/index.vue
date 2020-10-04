@@ -170,8 +170,14 @@ export default {
 };
 </script>
 <style lang="scss">
+.v-toolbar__content {
+  padding: 0;
+}
+.search-field {
+  max-width: 350px;
+}
 .volunteers-container {
-  padding-top: 0;
+  padding: 0;
 }
 .card-wrapper {
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
