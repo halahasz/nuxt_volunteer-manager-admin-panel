@@ -5,7 +5,7 @@
       <template>
         <v-data-table
           :headers="headers"
-          :items="this.$store.state.volunteer.volunteers"
+          :items="volunteers"
           class="volunteers-table"
           show-select
           v-model="selected"
@@ -104,17 +104,15 @@
               </tr>
             </tbody>
           </template>
-          <template v-slot:no-data>
-            <p>No products</p>
-          </template>
         </v-data-table>
+        <p v-if="!volunteers.length" class="no-items">No products</p>
       </template>
-      <!-- <vue-markdown>{{ source }}</vue-markdown> -->
     </v-container>
   </v-app>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import Header from "@/components/Header";
 import Modal from "@/components/shared/Modal";
 import EditCardModal from "@/components/shared/EditCardModal";
@@ -138,16 +136,15 @@ export default {
     ],
     activeCard: {}
   }),
+  computed: {
+    ...mapGetters({
+      volunteers: "volunteer/getVolunteers"
+    })
+  },
   fetch({ store }) {
     return store.dispatch("volunteer/fetchVolunteers");
   },
   methods: {
-    selectAll() {
-      console.log("ggg");
-      this.selected = this.$store.state.volunteer.volunteers;
-      // if (this.selected.length) this.selected = [];
-      // else this.selected = this.desserts.slice();
-    },
     activateCard(card) {
       this.$store.dispatch("volunteer/openEditModal");
       this.activeCard = { ...card };
@@ -170,6 +167,10 @@ export default {
 };
 </script>
 <style lang="scss">
+.no-items {
+  width: 100%;
+  text-align: center;
+}
 .v-toolbar__content {
   padding: 0;
 }

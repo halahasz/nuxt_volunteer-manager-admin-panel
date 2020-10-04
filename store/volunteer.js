@@ -27,6 +27,9 @@ export const state = () => {
 export const getters = {
   hasEmptyVolunteers(state) {
     return state.volunteers.length === 0;
+  },
+  getVolunteers: state => {
+    return state.volunteers;
   }
 };
 
