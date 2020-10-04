@@ -89,7 +89,10 @@ export const actions = {
       return card.id == volunteerData.id;
     });
     if (index !== -1) {
-      commit("replaceCard", { volunteer: volunteerData, index: index });
+      commit("removeCard", { index: index });
+      setTimeout(() => {
+        commit("addCard", { volunteer: volunteerData, index: index });
+      }, 10);
     }
   }
 };
@@ -125,8 +128,12 @@ export const mutations = {
   setCloseRegisterModal(state) {
     state.registerModal = false;
   },
-  replaceCard(state, { volunteer, index }) {
-    // state.volunteers[index + 1] = volunteer;
-    Vue.set(state.volunteers, index, volunteer);
+  removeCard(state, { index }) {
+    state.volunteers.splice(index, 1);
+  },
+  addCard(state, { volunteer, index }) {
+    const part1 = state.volunteers.slice(0, index);
+    const part2 = state.volunteers.slice(index);
+    state.volunteers = [...part1, volunteer, ...part2];
   }
 };

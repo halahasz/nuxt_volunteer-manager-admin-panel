@@ -38,7 +38,7 @@
             <tbody>
               <tr
                 v-for="item in items"
-                :key="item"
+                :key="item.id"
                 :class="{
                   'v-data-table__selected': selected.includes(item)
                 }"
@@ -46,8 +46,9 @@
                 <td>
                   <v-checkbox
                     v-model="selected"
-                    :value="item.id"
+                    :value="item"
                     color="#5eb5ad"
+                    class="custom-checkbox"
                   />
                 </td>
                 <td class="text-start">
@@ -127,7 +128,7 @@ export default {
     search: "",
     selected: [],
     headers: [
-      { text: "Thumbnail", value: "" },
+      { text: "Thumbnail", value: "thumbnail" },
       { text: "Name", value: "name" },
       { text: "Age", value: "age" },
       { text: "E-mail", value: "email" },
@@ -141,6 +142,12 @@ export default {
     return store.dispatch("volunteer/fetchVolunteers");
   },
   methods: {
+    selectAll() {
+      console.log("ggg");
+      this.selected = this.$store.state.volunteer.volunteers;
+      // if (this.selected.length) this.selected = [];
+      // else this.selected = this.desserts.slice();
+    },
     activateCard(card) {
       this.$store.dispatch("volunteer/openEditModal");
       this.activeCard = { ...card };
