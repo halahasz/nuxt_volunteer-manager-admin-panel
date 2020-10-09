@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <EditCardModal :cardData="activeCard" />
+    <EditVolunteerModal :cardData="activeCard" />
     <v-container class="volunteers-container">
       <template>
         <v-data-table
@@ -114,13 +114,11 @@
 <script>
 import { mapGetters } from "vuex";
 import Header from "@/components/Header";
-import Modal from "@/components/shared/Modal";
-import EditCardModal from "@/components/shared/EditCardModal";
+import EditVolunteerModal from "@/components/shared/EditVolunteerModal";
 export default {
   components: {
     Header,
-    Modal,
-    EditCardModal
+    EditVolunteerModal
   },
   data: () => ({
     search: "",

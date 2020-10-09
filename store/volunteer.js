@@ -18,7 +18,7 @@ export const state = () => {
     volunteers: [],
     items: ["social", "waitress", "kitchen", "logistics", "cleaning"],
     modal: false,
-    editCardModal: false,
+    EditVolunteerModal: false,
     loginModal: false,
     registerModal: false
   };
@@ -114,10 +114,10 @@ export const mutations = {
     state.modal = false;
   },
   setOpenEditModal(state) {
-    state.editCardModal = true;
+    state.EditVolunteerModal = true;
   },
   setCloseEditModal(state) {
-    state.editCardModal = false;
+    state.EditVolunteerModal = false;
   },
   setOpenLoginModal(state) {
     state.loginModal = true;

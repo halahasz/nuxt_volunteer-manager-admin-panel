@@ -10,9 +10,9 @@
         <button class="plus-button" @click="onClickPlus">
           <img src="~/assets/img/icons/plus.svg" alt class="settings-icon" />
         </button>
-        <Modal />
+        <AddItem />
         <nuxt />
-        <!-- <EditCardModal :cardData="activeCard" /> -->
+        <!-- <EditVolunteerModal :cardData="activeCard" /> -->
         <!-- <div
         v-if="this.$store.state.volunteer.volunteers.length"
         class="cards-head"
@@ -31,13 +31,13 @@
 
 <script>
 import Header from "@/components/Header";
-import Modal from "@/components/shared/Modal";
-import EditCardModal from "@/components/shared/EditCardModal";
+import AddItem from "@/components/shared/AddItem";
+import EditVolunteerModal from "@/components/shared/EditVolunteerModal";
 export default {
   components: {
     Header,
-    Modal,
-    EditCardModal
+    AddItem,
+    EditVolunteerModal
   },
   data: () => ({
     activeCard: {}
