@@ -2,7 +2,7 @@
   <v-app>
     <v-row justify="center">
       <v-dialog
-        v-model="this.$store.state.volunteer.loginModal"
+        v-model="this.$store.state.loginModal"
         persistent
         max-width="600px"
       >
@@ -115,7 +115,7 @@ export default {
             this.$store.dispatch("auth/setUser", {
               name: userName
             });
-            this.$store.dispatch("volunteer/closeLoginModal");
+            this.$store.dispatch("closeLoginModal");
             // setTimeout(() => {
             //   Cookies.remove("access_token");
             //   this.$store.commit("auth/removeAuthUser");
@@ -133,12 +133,12 @@ export default {
       }
     },
     cancel() {
-      this.$store.dispatch("volunteer/closeLoginModal");
+      this.$store.dispatch("closeLoginModal");
       this.$refs.form.reset();
     },
     register() {
-      this.$store.dispatch("volunteer/closeLoginModal");
-      this.$store.dispatch("volunteer/openRegisterModal");
+      this.$store.dispatch("closeLoginModal");
+      this.$store.dispatch("openRegisterModal");
     }
   }
 };

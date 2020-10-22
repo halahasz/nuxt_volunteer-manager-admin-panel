@@ -43,14 +43,20 @@
         </div>
         <div class="icons-container">
           <nuxt-link to="/" class="all-icon icon">All</nuxt-link>
-          <nuxt-link to="/social" class="people-icon icon">
+          <nuxt-link
+            v-for="section in sections"
+            :key="section.name"
+            :to="'/' + section.name"
+            :style="{ backgroundColor: section.color }"
+            class="people-icon icon"
+          >
             <img
               src="~/assets/img/icons/people.png"
               alt
               class="settings-icon"
             />
           </nuxt-link>
-          <nuxt-link to="/waitress" class="waitress-icon icon">
+          <!-- <nuxt-link to="/waitress" class="waitress-icon icon">
             <img
               src="~/assets/img/icons/waitress.png"
               alt
@@ -77,7 +83,7 @@
               alt
               class="settings-icon"
             />
-          </nuxt-link>
+          </nuxt-link> -->
         </div>
       </div>
     </section>
@@ -99,16 +105,17 @@ export default {
   },
   computed: {
     ...mapGetters({
+      sections: "getSections",
       user: "auth/authUser",
       isAuth: "auth/isAuthenticated"
     })
   },
   methods: {
     login() {
-      this.$store.dispatch("volunteer/openLoginModal");
+      this.$store.dispatch("openLoginModal");
     },
     register() {
-      this.$store.dispatch("volunteer/openRegisterModal");
+      this.$store.dispatch("openRegisterModal");
     },
     logout() {
       firebase

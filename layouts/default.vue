@@ -50,15 +50,15 @@ export default {
   },
   methods: {
     activateCard(card) {
-      this.$store.dispatch("volunteer/openEditModal");
+      this.$store.dispatch("openEditModal");
       this.activeCard = { ...card };
       this.$emit("activate-card", this.activeCard);
     },
     onClickPlus() {
-      this.$store.dispatch("volunteer/openModal");
+      this.$store.dispatch("openModal");
     },
     onClickEdit() {
-      this.$store.dispatch("volunteer/openEditModal");
+      this.$store.dispatch("openEditModal");
     },
     removeItems() {
       confirm("Are you sure you want to delete these items?") &&

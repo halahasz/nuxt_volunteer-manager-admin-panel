@@ -1,14 +1,38 @@
 import { getUserFromCookie } from "@/helpers";
-import INITIAL_DATA from "./initial_data.json";
 import CONFIG from "@/api/baseConfig";
-import Vue from "vue";
 import axios from "axios";
 
 export const state = () => {
   return {
     volunteers: [],
-    items: ["social", "waitress", "kitchen", "logistics", "cleaning"],
-    modal: false,
+    sections: [
+      {
+        name: "social",
+        color: "#f2cdcd",
+        icon: "~/assets/img/icons/people.png"
+      },
+      {
+        name: "waitress",
+        color: "#f2b59e",
+        icon: "~/assets/img/icons/waitress.png"
+      },
+      {
+        name: "kitchen",
+        color: "#f2dab4",
+        icon: "~/assets/img/icons/kitchen.png"
+      },
+      {
+        name: "logistics",
+        color: "#cde6ef",
+        icon: "~/assets/img/icons/logistics.png"
+      },
+      {
+        name: "cleaning",
+        color: "#f0eeae",
+        icon: "~/assets/img/icons/cleaning.png"
+      }
+    ],
+    addItemModal: false,
     EditVolunteerModal: false,
     loginModal: false,
     registerModal: false
@@ -21,6 +45,12 @@ export const getters = {
   },
   getVolunteers: state => {
     return state.volunteers;
+  },
+  getItemModal: state => {
+    return state.addItemModal;
+  },
+  getSections: state => {
+    return state.sections;
   }
 };
 
@@ -32,10 +62,10 @@ export const mutations = {
     state.volunteers.push(volunteer);
   },
   setOpenModal(state) {
-    state.modal = true;
+    state.addItemModal = true;
   },
   setCloseModal(state) {
-    state.modal = false;
+    state.addItemModal = false;
   },
   setOpenEditModal(state) {
     state.EditVolunteerModal = true;
@@ -131,7 +161,7 @@ export const actions = {
       commit("removeCard", { index: index });
       setTimeout(() => {
         commit("addCard", { volunteer: volunteerData, index: index });
-      }, 10);
+      }, 500);
     }
   }
 };

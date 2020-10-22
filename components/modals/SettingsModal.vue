@@ -81,7 +81,6 @@
 import { mapGetters } from "vuex";
 import axios from "axios";
 import CONFIG from "@/api/baseConfig";
-
 export default {
   data() {
     return {
@@ -109,7 +108,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      addItemModal: "getItemModal"
+      addItemModal: "addItemModal"
     })
   },
   methods: {

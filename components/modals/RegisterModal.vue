@@ -2,7 +2,7 @@
   <v-app>
     <v-row justify="center">
       <v-dialog
-        v-model="this.$store.state.volunteer.registerModal"
+        v-model="this.$store.state.registerModal"
         persistent
         max-width="600px"
       >
@@ -164,7 +164,7 @@ export default {
                 user
                   .getIdToken(true)
                   .then(token => Cookies.set("access_token", token));
-                this.$store.dispatch("volunteer/closeRegisterModal");
+                this.$store.dispatch("closeRegisterModal");
               })
               .catch(error => console.log(error));
           })
@@ -176,11 +176,11 @@ export default {
       }
     },
     cancel() {
-      this.$store.dispatch("volunteer/closeRegisterModal");
+      this.$store.dispatch("closeRegisterModal");
     },
     login() {
-      this.$store.dispatch("volunteer/closeRegisterModal");
-      this.$store.dispatch("volunteer/openLoginModal");
+      this.$store.dispatch("closeRegisterModal");
+      this.$store.dispatch("openLoginModal");
     }
   }
 };

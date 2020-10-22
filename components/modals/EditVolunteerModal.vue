@@ -2,7 +2,7 @@
   <v-app>
     <v-row justify="center">
       <v-dialog
-        v-model="this.$store.state.volunteer.EditVolunteerModal"
+        v-model="this.$store.state.EditVolunteerModal"
         persistent
         max-width="600px"
       >
@@ -46,7 +46,7 @@
                 <v-col cols="12" sm="6">
                   <v-select
                     v-model="card.section"
-                    :items="this.$store.state.volunteer.items"
+                    :items="this.$store.state.items"
                     label="Solo field"
                     :rules="[sectionRules()]"
                     required
@@ -116,13 +116,13 @@ export default {
   },
   methods: {
     onCloseEditModal() {
-      this.$store.dispatch("volunteer/closeEditModal");
+      this.$store.dispatch("closeEditModal");
     },
     updateCard() {
       // if (this.$refs.form.validate()) {
-      this.$store.dispatch("volunteer/updateVolunteer", this.card);
+      this.$store.dispatch("updateVolunteer", this.card);
       // // window.location.reload(true);
-      this.$store.dispatch("volunteer/closeEditModal");
+      this.$store.dispatch("closeEditModal");
 
       // this.$refs.form.resetValidation();
       setTimeout(() => {
@@ -133,8 +133,8 @@ export default {
       // }
     },
     removeItem() {
-      this.$store.dispatch("volunteer/removeVolunteer", this.card.id);
-      this.$store.dispatch("volunteer/closeEditModal");
+      this.$store.dispatch("removeVolunteer", this.card.id);
+      this.$store.dispatch("closeEditModal");
     }
   }
 };
