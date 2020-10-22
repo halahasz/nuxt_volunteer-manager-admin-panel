@@ -114,7 +114,7 @@
 <script>
 import { mapGetters } from "vuex";
 import Header from "@/components/Header";
-import EditVolunteerModal from "@/components/shared/EditVolunteerModal";
+import EditVolunteerModal from "@/components/modals/EditVolunteerModal";
 export default {
   components: {
     Header,
@@ -136,28 +136,28 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      volunteers: "volunteer/getVolunteers"
+      volunteers: "getVolunteers"
     })
   },
   fetch({ store }) {
-    return store.dispatch("volunteer/fetchVolunteers");
+    return store.dispatch("fetchVolunteers");
   },
   methods: {
     activateCard(card) {
-      this.$store.dispatch("volunteer/openEditModal");
+      this.$store.dispatch("openEditModal");
       this.activeCard = { ...card };
     },
     onClickPlus() {
-      this.$store.dispatch("volunteer/openModal");
+      this.$store.dispatch("openModal");
     },
     onClickEdit(item) {
       this.activeCard = { ...item };
-      this.$store.dispatch("volunteer/openEditModal");
+      this.$store.dispatch("openEditModal");
     },
     removeItems() {
       confirm("Are you sure you want to delete these items?") &&
         this.selected.forEach(el => {
-          this.$store.dispatch("volunteer/removeVolunteer", el.id);
+          this.$store.dispatch("removeVolunteer", el.id);
         });
       this.selected = [];
     }

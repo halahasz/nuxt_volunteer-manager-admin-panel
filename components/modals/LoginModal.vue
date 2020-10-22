@@ -116,10 +116,10 @@ export default {
               name: userName
             });
             this.$store.dispatch("volunteer/closeLoginModal");
-            setTimeout(() => {
-              Cookies.remove("access_token");
-              this.$store.commit("auth/removeAuthUser");
-            }, 60000);
+            // setTimeout(() => {
+            //   Cookies.remove("access_token");
+            //   this.$store.commit("auth/removeAuthUser");
+            // }, 60000);
           })
           .catch(err => {
             this.$toasted.error(err, {

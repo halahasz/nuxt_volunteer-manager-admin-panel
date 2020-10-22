@@ -129,7 +129,7 @@ export default {
         document
           .querySelector(".custom-checkbox input")
           .setAttribute("aria-checked", false);
-      }, 1000);
+      }, 10);
       // }
     },
     removeItem() {

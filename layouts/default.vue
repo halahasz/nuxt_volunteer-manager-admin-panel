@@ -3,14 +3,14 @@
     <div>
       <Header />
       <div class="content">
-        <h1 v-if="this.$store.state.volunteer.volunteers.length">
-          {{ this.$store.state.volunteer.title }}
+        <h1 v-if="volunteers.length">
+          All volunteers
         </h1>
-        <h1 v-else>{{ this.$store.state.volunteer.noVolunteers }}</h1>
+        <h1 v-else>There are no volunteers</h1>
         <button class="plus-button" @click="onClickPlus">
           <img src="~/assets/img/icons/plus.svg" alt class="settings-icon" />
         </button>
-        <AddItem />
+        <AddItemModal />
         <nuxt />
         <!-- <EditVolunteerModal :cardData="activeCard" /> -->
         <!-- <div
@@ -30,18 +30,24 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import Header from "@/components/Header";
-import AddItem from "@/components/shared/AddItem";
-import EditVolunteerModal from "@/components/shared/EditVolunteerModal";
+import AddItemModal from "@/components/modals/AddItemModal";
+import EditVolunteerModal from "@/components/modals/EditVolunteerModal";
 export default {
   components: {
     Header,
-    AddItem,
+    AddItemModal,
     EditVolunteerModal
   },
   data: () => ({
     activeCard: {}
   }),
+  computed: {
+    ...mapGetters({
+      volunteers: "getVolunteers"
+    })
+  },
   methods: {
     activateCard(card) {
       this.$store.dispatch("volunteer/openEditModal");

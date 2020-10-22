@@ -85,8 +85,8 @@
 </template>
 
 <script>
-import LoginModal from "@/components/shared/LoginModal";
-import RegisterModal from "@/components/shared/RegisterModal";
+import LoginModal from "@/components/modals/LoginModal";
+import RegisterModal from "@/components/modals/RegisterModal";
 import { mapGetters } from "vuex";
 import * as firebase from "firebase/app";
 import "firebase/auth";
